@@ -1,10 +1,40 @@
 import Head from "next/head";
-import { Inter } from "@next/font/google";
-import { Box } from "@mui/material";
-
-const inter = Inter({ subsets: ["latin"] });
+import { useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
+import io from "socket.io-client";
+import dynamic from "next/dynamic";
+const DynamicComponentWithNoSSR = dynamic(() => import("components/Index"), { ssr: false });
 
 export default function Home() {
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [input, setInput] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const socketInitializer = async () => {
+      await fetch("/api/socket");
+      setSocket(io("", { query: { name: "John Smith" } }));
+    };
+    socketInitializer();
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("connect", () => {
+        console.log("connected");
+      });
+      socket.on("update-input", (input: string) => {
+        setInput(input);
+      });
+    }
+  }, [socket]);
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+    socket?.emit("input-change", e.target.value);
+  };
+
   return (
     <>
       <Head>
@@ -13,16 +43,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box
-        sx={{
-          fontFamily: inter,
-          fontSize: "1.5rem",
-          fontWeight: 500,
-          color: "red",
-        }}
-      >
-        te3st dic
-      </Box>
+      <div key={Math.random()} id="game"></div>
+      {loading ? <DynamicComponentWithNoSSR /> : null}
     </>
   );
 }
