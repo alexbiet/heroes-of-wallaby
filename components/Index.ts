@@ -30,6 +30,9 @@ export default function Index() {
         preload: preload,
         create: create,
         update: update,
+        level2: {
+          create: level2Create,
+        }
       },
     };
 
@@ -39,9 +42,10 @@ export default function Index() {
     let player: any;
     let cursors: any;
     let stars: any;
-    var score = 0;
-    var scoreText: any;
-    var bombs: any;
+    let score = 0;
+    let scoreText: any;
+    let bombs: any;
+    let door: any;
 
     function preload(this: any) {
       this.load.image("sky", "assets/sky.png");
@@ -109,6 +113,12 @@ export default function Index() {
       this.physics.add.collider(bombs, platforms);
 
       this.physics.add.collider(player, bombs, hitBomb, null, this);
+
+      door = this.physics.add.staticImage(200, 500, "dude");
+      this.physics.add.collider(player, door, () => {
+        this.scene.start("level2")
+      });
+
     }
 
     function hitBomb(this: any, player: any, bomb: any) {
@@ -140,7 +150,19 @@ export default function Index() {
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
       }
     }
-    function update() {
+    
+    function level2Create(this: any) {
+      this.add.image(400, 300, "sky");
+      scoreText = this.add.text(16, 16, "score: 0", { fontSize: "32px", fill: "#000" });
+
+      player = this.physics.add.sprite(100, 450, "dude");
+      player.setBounce(0.2);
+      player.setCollideWorldBounds(true);
+
+      
+    }
+
+    function update(this: any) {
       if (cursors.left.isDown) {
         player.setVelocityX(-160);
 
@@ -158,6 +180,10 @@ export default function Index() {
       if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-330);
       }
+
+      this.physics.collide(player, door,()=>{
+        this.scene.start("level2");
+      });
     }
   };
 
