@@ -4,7 +4,7 @@ import { Socket } from "socket.io-client";
 import io from "socket.io-client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import kaboom, { GameObj, Vec2 } from "kaboom";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -20,8 +20,9 @@ export default function Home() {
 
     const k = kaboom({
       canvas: canvasRef.current || undefined,
-      width: 800,
-      height: 800,
+      width: 400,
+      height: 400,
+      scale: 2,
     });
 
     // toggle fullscreen mode on "f"
@@ -135,7 +136,7 @@ export default function Home() {
         >
           <ConnectButton />
         </Box>
-        "f" to toggle fullscreen
+        <Typography>&quot;F&quot; to toggle fullscreen</Typography>
         <canvas ref={canvasRef} />
       </Box>
     </>
