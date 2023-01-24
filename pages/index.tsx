@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import io from "socket.io-client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import kaboom, { GameObj, Vec2 } from "kaboom";
+import kaboom, { GameObj, Key, SpriteAnimPlayOpt, Vec2 } from "kaboom";
 import { Box, Typography } from "@mui/material";
 
 export default function Home() {
@@ -37,6 +37,7 @@ export default function Home() {
           from: 5,
           to: 8,
           loop: true,
+
           speed: 5,
         },
         left: {
@@ -59,6 +60,32 @@ export default function Home() {
         },
       },
     });
+
+    loadSprite("clotharmor", "/assets/clotharmor.png", {
+      sliceX: 5,
+      sliceY: 9,
+      anims: {
+        right: {
+          from: 0,
+          to: 8,
+          loop: true,
+          speed: 5,
+        },
+        up: {
+          from: 11,
+          to: 21,
+          loop: true,
+          speed: 5,
+        },
+        down: {
+          from: 22,
+          to: 32,
+          loop: true,
+          speed: 5,
+        },
+      },
+    });
+
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -68,16 +95,23 @@ export default function Home() {
       down: DOWN,
     };
     const SPEED = 120;
-    const player = add([sprite("dude", { frame: 4 }), pos(200, 100), area(), "player"]);
+    const player = add([sprite("dude", { frame: 2 }), pos(200, 100), area(), "player"]);
+    // const enemy = add([sprite("clotharmor"), pos(200, 200), "enemy"]);
 
     for (const dir in dirs) {
-      onKeyPress(dir as any, () => {
-        player.play(dir as any);
+      onKeyPress(dir as Key, () => {
+        if (dir === "left") {
+          player.play("right");
+          player.flipX(true);
+        } else {
+          player.play(dir);
+        }
       });
       onKeyDown(dir as any, () => {
         player.move(dirs[dir].scale(SPEED));
       });
       onKeyRelease(dir as any, () => {
+        //if no other keys are pressed, stop the animation
         player.stop();
         dir === "left"
           ? (player.frame = 0)
