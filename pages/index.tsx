@@ -31,30 +31,34 @@ export default function Home() {
     });
 
     loadSprite("dude", "/assets/dude.png", {
-      sliceX: 9,
+      sliceX: 5,
       anims: {
         right: {
-          from: 5,
-          to: 8,
+          from: 4,
+          to: 3,
           loop: true,
+          pingpong: true,
           speed: 5,
         },
         left: {
-          from: 0,
-          to: 3,
+          from: 1,
+          to: 0,
           loop: true,
+          pingpong: true,
           speed: 5,
         },
         up: {
-          from: 0,
-          to: 1,
+          from: 3,
+          to: 4,
           loop: true,
+          pingpong: true,
           speed: 5,
         },
         down: {
-          from: 4,
-          to: 6,
+          from: 1,
+          to: 0,
           loop: true,
+          pingpong: true,
           speed: 5,
         },
       },
@@ -68,7 +72,7 @@ export default function Home() {
       down: DOWN,
     };
     const SPEED = 120;
-    const player = add([sprite("dude", { frame: 4 }), pos(200, 100), area(), "player"]);
+    const player = add([sprite("dude", { frame: 2 }), pos(200, 100), area(), "player"]);
 
     for (const dir in dirs) {
       onKeyPress(dir as any, () => {
@@ -80,12 +84,12 @@ export default function Home() {
       onKeyRelease(dir as any, () => {
         player.stop();
         dir === "left"
-          ? (player.frame = 0)
+          ? (player.frame = 2)
           : dir === "right"
-          ? (player.frame = 5)
+          ? (player.frame = 2)
           : dir === "up"
-          ? (player.frame = 1)
-          : (player.frame = 4);
+          ? (player.frame = 2)
+          : (player.frame = 2);
       });
     }
   }, []);
