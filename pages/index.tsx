@@ -1,26 +1,97 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import io from "socket.io-client";
-import dynamic from "next/dynamic";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-
-const DynamicComponentWithNoSSR = dynamic(() => import("components/Index"), { ssr: false });
+import kaboom, { GameObj, Vec2 } from "kaboom";
+import { Box } from "@mui/material";
 
 export default function Home() {
+  const canvasRef = useRef(null);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [input, setInput] = useState<string>("");
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     const socketInitializer = async () => {
       await fetch("/api/socket");
       setSocket(io("", { query: { name: "John Smith" } }));
     };
     socketInitializer();
+
+    const k = kaboom({
+      canvas: canvasRef.current || undefined,
+      width: 800,
+      height: 800,
+    });
+
+    // toggle fullscreen mode on "f"
+    onKeyPress("f", () => {
+      fullscreen(!isFullscreen());
+    });
+
+    loadSprite("dude", "/assets/dude.png", {
+      sliceX: 9,
+      anims: {
+        right: {
+          from: 5,
+          to: 8,
+          loop: true,
+          speed: 5,
+        },
+        left: {
+          from: 0,
+          to: 3,
+          loop: true,
+          speed: 5,
+        },
+        up: {
+          from: 0,
+          to: 1,
+          loop: true,
+          speed: 5,
+        },
+        down: {
+          from: 4,
+          to: 6,
+          loop: true,
+          speed: 5,
+        },
+      },
+    });
+    const dirs: {
+      [key: string]: Vec2;
+    } = {
+      left: LEFT,
+      right: RIGHT,
+      up: UP,
+      down: DOWN,
+    };
+    const SPEED = 120;
+    const player = add([sprite("dude", { frame: 4 }), pos(200, 100), area(), "player"]);
+
+    for (const dir in dirs) {
+      onKeyPress(dir as any, () => {
+        player.play(dir as any);
+      });
+      onKeyDown(dir as any, () => {
+        player.move(dirs[dir].scale(SPEED));
+      });
+      onKeyRelease(dir as any, () => {
+        player.stop();
+        dir === "left"
+          ? (player.frame = 0)
+          : dir === "right"
+          ? (player.frame = 5)
+          : dir === "up"
+          ? (player.frame = 1)
+          : (player.frame = 4);
+      });
+    }
   }, []);
 
+  ////////////////////////////////
+  ///////// SOCKET LOGIC /////////
+  ////////////////////////////////
   useEffect(() => {
     if (socket) {
       socket.on("connect", () => {
@@ -45,9 +116,28 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ConnectButton />
-      <div key={Math.random()} id="game"></div>
-      {loading ? <DynamicComponentWithNoSSR /> : null}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "right",
+            width: "100%",
+            pr: "100px",
+            pt: "20px",
+          }}
+        >
+          <ConnectButton />
+        </Box>
+        "f" to toggle fullscreen
+        <canvas ref={canvasRef} />
+      </Box>
     </>
   );
 }
