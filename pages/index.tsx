@@ -64,7 +64,7 @@ export default function Home() {
       },
     });
 
-    loadSprite("clotharmor", "/assets/clotharmor.png", {
+    loadSprite("cloth", "/sprites/cloth.png", {
       sliceX: 5,
       sliceY: 9,
       anims: {
