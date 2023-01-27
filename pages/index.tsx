@@ -39,59 +39,25 @@ export default function Home() {
           to: 2,
           loop: true,
           pingpong: true,
-          speed: 5,
-        },
-        left: {
-          from: 1,
-          to: 2,
-          loop: true,
-          pingpong: true,
-          speed: 5,
+          speed: 4,
         },
         up: {
           from: 1,
           to: 2,
           loop: true,
           pingpong: true,
-          speed: 5,
+          speed: 4,
         },
         down: {
           from: 1,
           to: 2,
           loop: true,
           pingpong: true,
-          speed: 5,
+          speed: 4,
         },
         attack: {
-          from: 3,
-          to: 4,
-          loop: true,
-          pingpong: true,
-          speed: 10,
-        },
-      },
-    });
-
-    loadSprite("cloth", "/sprites/cloth.png", {
-      sliceX: 5,
-      sliceY: 9,
-      anims: {
-        right: {
-          from: 0,
-          to: 8,
-          loop: true,
-          speed: 5,
-        },
-        up: {
-          from: 11,
-          to: 21,
-          loop: true,
-          speed: 5,
-        },
-        down: {
-          from: 22,
-          to: 32,
-          loop: true,
+          from: 4,
+          to: 2,
           speed: 5,
         },
       },
@@ -113,12 +79,12 @@ export default function Home() {
       up: UP,
       down: DOWN,
     };
-    const SPEED = 120;
+    const SPEED = 60;
     const player = add([
       sprite("dude", { frame: 0 }),
       z(99),
       health(3),
-      scale(0.5),
+      scale(0.75),
       pos(200, 100),
       area(),
       "player",
@@ -212,8 +178,8 @@ export default function Home() {
             display: "flex",
             justifyContent: "right",
             width: "100%",
-            pt: "10px",
-            margin: "0 auto",
+            mt: "20px",
+            mr: "20px",
           }}
         >
           <Typography
@@ -228,7 +194,6 @@ export default function Home() {
             </i>
           </Typography>
           <ConnectButton />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </Box>
 
         <Box
