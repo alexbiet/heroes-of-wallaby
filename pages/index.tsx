@@ -189,7 +189,7 @@ export default function Home() {
           alignItems: "center",
           height: "100vh",
           backgroundColor: "#111",
-          verticalAlign: "middle"
+          verticalAlign: "middle",
         }}
       >
         <Box
@@ -197,14 +197,14 @@ export default function Home() {
             display: "flex",
             justifyContent: "right",
             width: "100%",
-            pr: "100px",
             pt: "10px",
+            margin: "0 auto",
           }}
         >
           <Typography sx={{
             color: "#777", paddingRight: "30px", paddingTop: "5px"}}
             ><i>Press <b>&quot;F&quot;</b> to toggle fullscreen.</i></Typography>
-          <ConnectButton />
+          <ConnectButton />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         </Box>
         
 
