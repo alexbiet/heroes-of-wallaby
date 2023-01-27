@@ -34,32 +34,39 @@ export default function Home() {
       sliceX: 5,
       anims: {
         right: {
-          from: 4,
-          to: 3,
+          from: 1,
+          to: 2,
           loop: true,
           pingpong: true,
           speed: 5,
         },
         left: {
           from: 1,
-          to: 0,
+          to: 2,
           loop: true,
           pingpong: true,
           speed: 5,
         },
         up: {
-          from: 3,
-          to: 4,
+          from: 1,
+          to: 2,
           loop: true,
           pingpong: true,
           speed: 5,
         },
         down: {
           from: 1,
-          to: 0,
+          to: 2,
           loop: true,
           pingpong: true,
           speed: 5,
+        },
+        attack: {
+          from: 3,
+          to: 4,
+          loop: true,
+          pingpong: true,
+          speed: 10,
         },
       },
     });
@@ -93,6 +100,11 @@ export default function Home() {
       sliceX: 5,
     });
 
+    loadSprite("dungeon-1", "/assets/dungeon-1.png", {
+      sliceX: 1,
+    });
+
+
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -102,17 +114,28 @@ export default function Home() {
       down: DOWN,
     };
     const SPEED = 120;
-    const player = add([sprite("dude", { frame: 2 }), z(99), health(3), pos(200, 100), area(), "player"]);
+    const player = add([sprite("dude", { frame: 0 }), z(99), health(3), pos(200, 100), area(), "player"]);
     const map = add([sprite("map", { frame: 0 }), z(1), pos(100, 100), area(), "bush"]);
+    const dungeon = add([sprite("dungeon-1", { frame: 0 }), z(1), pos(0, 0), width()/4, height()/4, area(), "bg"]);
     // const enemy = add([sprite("clotharmor"), pos(200, 200), "enemy"]);
+
+
+
+    document.addEventListener("keypress", function(event) {
+      // console.log(event.keyCode)
+      if (event.keyCode == 97) {
+        player.play("attack");
+      }
+    });
 
     for (const dir in dirs) {
       onKeyPress(dir as Key, () => {
         if (dir === "left") {
           player.play("right");
-          player.flipX(true);
+          player.flipX(false);
         } else {
           player.play(dir);
+          player.flipX(true);
         }
       });
       onKeyDown(dir as any, () => {
@@ -122,12 +145,12 @@ export default function Home() {
         //if no other keys are pressed, stop the animation
         player.stop();
         dir === "left"
-          ? (player.frame = 2)
+          ? (player.frame = 1)
           : dir === "right"
-          ? (player.frame = 2)
+          ? (player.frame = 1)
           : dir === "up"
-          ? (player.frame = 2)
-          : (player.frame = 2);
+          ? (player.frame = 1)
+          : (player.frame = 1);
       });
     }
   }, []);
@@ -165,6 +188,8 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           height: "100vh",
+          backgroundColor: "#111",
+          verticalAlign: "middle"
         }}
       >
         <Box
@@ -173,13 +198,23 @@ export default function Home() {
             justifyContent: "right",
             width: "100%",
             pr: "100px",
-            pt: "20px",
+            pt: "10px",
           }}
         >
+          <Typography sx={{
+            color: "#777", paddingRight: "30px", paddingTop: "5px"}}
+            ><i>Press <b>&quot;F&quot;</b> to toggle fullscreen.</i></Typography>
           <ConnectButton />
         </Box>
-        <Typography>&quot;F&quot; to toggle fullscreen</Typography>
-        <canvas ref={canvasRef} />
+        
+
+        <Box
+          sx={{
+            border: "5px solid brown",
+          }}
+        >
+          <canvas ref={canvasRef} />
+        </Box>
       </Box>
     </>
   );
