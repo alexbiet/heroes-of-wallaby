@@ -4,7 +4,8 @@ import { Socket } from "socket.io-client";
 import io from "socket.io-client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import kaboom, { GameObj, Key, SpriteAnimPlayOpt, Vec2 } from "kaboom";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -104,7 +105,6 @@ export default function Home() {
       sliceX: 1,
     });
 
-
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -114,14 +114,28 @@ export default function Home() {
       down: DOWN,
     };
     const SPEED = 120;
-    const player = add([sprite("dude", { frame: 0 }), z(99), health(3), pos(200, 100), area(), "player"]);
+    const player = add([
+      sprite("dude", { frame: 0 }),
+      z(99),
+      health(3),
+      scale(0.5),
+      pos(200, 100),
+      area(),
+      "player",
+    ]);
     const map = add([sprite("map", { frame: 0 }), z(1), pos(100, 100), area(), "bush"]);
-    const dungeon = add([sprite("dungeon-1", { frame: 0 }), z(1), pos(0, 0), width()/4, height()/4, area(), "bg"]);
+    const dungeon = add([
+      sprite("dungeon-1", { frame: 0 }),
+      z(1),
+      pos(0, 0),
+      width() / 4,
+      height() / 4,
+      area(),
+      "bg",
+    ]);
     // const enemy = add([sprite("clotharmor"), pos(200, 200), "enemy"]);
 
-
-
-    document.addEventListener("keypress", function(event) {
+    document.addEventListener("keypress", function (event) {
       // console.log(event.keyCode)
       if (event.keyCode == 97) {
         player.play("attack");
@@ -182,6 +196,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Box
         sx={{
           display: "flex",
@@ -201,12 +216,20 @@ export default function Home() {
             margin: "0 auto",
           }}
         >
-          <Typography sx={{
-            color: "#777", paddingRight: "30px", paddingTop: "5px"}}
-            ><i>Press <b>&quot;F&quot;</b> to toggle fullscreen.</i></Typography>
-          <ConnectButton />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <Typography
+            sx={{
+              color: "#777",
+              paddingRight: "30px",
+              paddingTop: "5px",
+            }}
+          >
+            <i>
+              Press <b>&quot;F&quot;</b> to toggle fullscreen.
+            </i>
+          </Typography>
+          <ConnectButton />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </Box>
-        
 
         <Box
           sx={{
@@ -215,6 +238,9 @@ export default function Home() {
         >
           <canvas ref={canvasRef} />
         </Box>
+        <Button>
+          <Link href="/landing">Landing</Link>
+        </Button>
       </Box>
     </>
   );
