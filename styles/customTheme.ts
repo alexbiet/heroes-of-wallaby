@@ -8,8 +8,6 @@ export const customTheme = createTheme({
     secondary: {
       main: "#000",
     },
-
-
   },
   typography: {
     fontFamily: "Press Start 2P, cursive",
@@ -28,6 +26,8 @@ export const customTheme = createTheme({
           props: { variant: "contained" },
           style: {
             color: "#000",     
+            //background gradient top to bottom gold to yellow to orange
+            background: "linear-gradient(180deg, #20A1FE 0%, #20A1FE 50%, #75C4FF 51%, #75C4FF 100%) !important",
             "&:hover": {
               backgroundColor: "#222",
               color: "#fff",
