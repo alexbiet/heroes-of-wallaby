@@ -13,45 +13,43 @@ export const CustomConnect = () => {
         authenticationStatus,
         mounted,
       }) => {
-        // Note: If your app doesn't use authentication, you
-        // can remove all 'authenticationStatus' checks
-        const ready = mounted && authenticationStatus !== "loading";
-        const connected =
-          ready &&
-          account &&
-          chain &&
-          (!authenticationStatus || authenticationStatus === "authenticated");
+        const connected = mounted && account && chain;
 
         return (
-          <Box
-            sx={{
-              display: ready ? "flex" : "none",
-              color: "white",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography>TVL: 0.00 FIL</Typography>
+          <>
             <Box
               sx={{
-                display: "flex",
-                gap: "20px",
+                display: connected ? "flex" : "none",
+                color: "white",
+                justifyContent: "space-between",
               }}
             >
-              <Typography>
-                {`${account?.displayBalance} - ${account?.address.substring(
-                  0,
-                  6
-                )}...${account?.address.substring(38)} | `}
-              </Typography>
-              <Button
-                onClick={connected ? openAccountModal : openConnectModal}
-                variant="text"
-                color="inherit"
+              <Typography>TVL: 0.00 FIL</Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "20px",
+                }}
               >
-                <Typography>Account</Typography>
-              </Button>
+                <Typography>
+                  {`${account?.displayBalance} - ${account?.address.substring(
+                    0,
+                    6
+                  )}...${account?.address.substring(38)} | `}
+                </Typography>
+                <Button
+                  onClick={connected ? openAccountModal : openConnectModal}
+                  variant="text"
+                  color="inherit"
+                >
+                  <Typography>Account</Typography>
+                </Button>
+              </Box>
             </Box>
-          </Box>
+            <Button>
+              <Typography>Connect</Typography>
+            </Button>
+          </>
         );
       }}
     </ConnectButton.Custom>
