@@ -95,9 +95,7 @@ export default function Home() {
       sliceX: 5,
     });
 
-    loadSprite("dungeon-1", "/assets/dungeon-1.png", {
-      sliceX: 1,
-    });
+    loadSprite("dungeon-1", "/assets/dungeon-1.png", {});
 
     loadSprite("clotharmor", "/assets/clotharmor.png", {
       sliceX: 5,
@@ -115,14 +113,7 @@ export default function Home() {
     const SPEED = 60;
 
     const map = add([sprite("map", { frame: 0 }), pos(100, 100), area(), "bush"]);
-    const dungeon = add([
-      sprite("dungeon-1", { frame: 0 }),
-      pos(0, 0),
-      width() / 4,
-      height() / 4,
-      area(),
-      "bg",
-    ]);
+    const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
 
     const player = add([
       sprite("dude", { frame: 0 }),
