@@ -8,15 +8,14 @@ export default function Landing() {
       sx={{
         alignItems: "center",
         justifyContent: "space-between",
-        maxWidth: "1200px",
-        height: "800px",
-        width: "800px",
+        maxWidth: "1100px",
+        height: "100vh",
+        width: "100%",
         mx: "auto",
-        mt: "50px",
+        mt: "0",
         backgroundImage: "url(/assets/welcome-screen.png)",
         backgroundSize: "cover",
-        backgroundPosition: "bottom",
-        border: "5px solid brown",
+        backgroundPosition: "bottom"
       }}
     >
       <Stack
@@ -48,13 +47,23 @@ export default function Landing() {
         >
           ?
         </Button>
+
+        <div className="pixel-borders pixel-borders--1">Pixel border 1</div>
+        <div className="pixel-borders pixel-borders--1 pixel-borders--1-inset">Pixel inset 1</div>
+        <div className="pixel-borders pixel-borders--2">Pixel border 2</div>
+        <div className="pixel-borders pixel-borders--2-inset">Pixel inset 2</div>
+        <button className="pixel-borders pixel-box--light">Pixel light</button>
+        <button className="pixel-borders pixel-box--primary">Pixel primary</button>
+        <button className="pixel-borders pixel-box--success">Pixel success</button>
+        <button className="pixel-borders pixel-box--warning">Pixel warning</button>
+        <button className="pixel-borders pixel-box--error">Pixel error</button>
       </Stack>
       <Box
         sx={{
           mb: "20px",
         }}
       >
-        <Button>
+        <Button className="pixel-borders pixel-borders--2">
           <Link href="/">Game</Link>
         </Button>
       </Box>
