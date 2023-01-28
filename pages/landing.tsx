@@ -1,12 +1,24 @@
 import { CustomConnect } from "@/components/CustomConnect";
-import { Box, Button, Stack, ThemeProvider, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
-import { customTheme } from "@/styles/customTheme";
 
 export default function Landing() {
   return (
-    <ThemeProvider theme={customTheme}>
+    <Stack
+      sx={{
+        alignItems: "center",
+        justifyContent: "space-between",
+        maxWidth: "1100px",
+        height: "100vh",
+        width: "100%",
+        mx: "auto",
+        mt: "0",
+        backgroundImage: "url(/assets/welcome-screen.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "bottom",
+      }}
+    >
       <Stack
         sx={{
           alignItems: "center",
@@ -48,20 +60,28 @@ export default function Landing() {
             onClick={() => {
               alert("Coming soon! Learn about HoW.");
             }}
-          >
-            ?
-          </Button>
+          ></Button>
+
+          <div className="pixel-borders pixel-borders--1">Pixel border 1</div>
+          <div className="pixel-borders pixel-borders--1 pixel-borders--1-inset">Pixel inset 1</div>
+          <div className="pixel-borders pixel-borders--2">Pixel border 2</div>
+          <div className="pixel-borders pixel-borders--2-inset">Pixel inset 2</div>
+          <button className="pixel-borders pixel-box--light">Pixel light</button>
+          <button className="pixel-borders pixel-box--primary">Pixel primary</button>
+          <button className="pixel-borders pixel-box--success">Pixel success</button>
+          <button className="pixel-borders pixel-box--warning">Pixel warning</button>
+          <button className="pixel-borders pixel-box--error">Pixel error</button>
         </Stack>
         <Box
           sx={{
             mb: "20px",
           }}
         >
-          <Button>
+          <Button className="pixel-borders pixel-borders--2">
             <Link href="/">Game</Link>
           </Button>
         </Box>
       </Stack>
-    </ThemeProvider>
+    </Stack>
   );
 }
