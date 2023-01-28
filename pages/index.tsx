@@ -6,11 +6,14 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import kaboom, { GameObj, Key, SpriteAnimPlayOpt, Vec2 } from "kaboom";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
+import { ethers } from "ethers";
+import { useProvider } from "wagmi";
 
 export default function Home() {
   const canvasRef = useRef(null);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [input, setInput] = useState<string>("");
+  const provider = useProvider();
 
   useEffect(() => {
     const socketInitializer = async () => {
@@ -25,6 +28,32 @@ export default function Home() {
       height: 400,
       scale: 2,
     });
+
+    const WGoldContract = new ethers.Contract(
+      "0xf1854ECD035A82aB14c8B5334a8cA2C3eD766BB6",
+      [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "account",
+              type: "address",
+            },
+          ],
+          name: "balanceOf",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ],
+      provider
+    );
 
     // toggle fullscreen mode on "f"
     onKeyPress("f", () => {
@@ -71,6 +100,11 @@ export default function Home() {
       sliceX: 1,
     });
 
+    loadSprite("clotharmor", "/assets/clotharmor.png", {
+      sliceX: 5,
+      sliceY: 9,
+    });
+
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -80,33 +114,35 @@ export default function Home() {
       down: DOWN,
     };
     const SPEED = 60;
-    const player = add([
-      sprite("dude", { frame: 0 }),
-      z(99),
-      health(3),
-      scale(0.75),
-      pos(200, 100),
-      area(),
-      "player",
-    ]);
-    const map = add([sprite("map", { frame: 0 }), z(1), pos(100, 100), area(), "bush"]);
+
+    const map = add([sprite("map", { frame: 0 }), pos(100, 100), area(), "bush"]);
     const dungeon = add([
       sprite("dungeon-1", { frame: 0 }),
-      z(1),
       pos(0, 0),
       width() / 4,
       height() / 4,
       area(),
       "bg",
     ]);
-    // const enemy = add([sprite("clotharmor"), pos(200, 200), "enemy"]);
 
-    document.addEventListener("keypress", function (event) {
-      // console.log(event.keyCode)
-      if (event.keyCode == 97) {
-        player.play("attack");
-      }
-    });
+    const player = add([
+      sprite("dude", { frame: 0 }),
+      health(3),
+      scale(0.75),
+      pos(200, 100),
+      solid(),
+      area(scale(0.75)),
+      "player",
+    ]);
+
+    const enemy = add([
+      sprite("clotharmor"),
+      scale(0.5),
+      solid(),
+      area(scale(0.5)),
+      pos(200, 200),
+      "enemy",
+    ]);
 
     for (const dir in dirs) {
       onKeyPress(dir as Key, () => {
@@ -133,6 +169,14 @@ export default function Home() {
           : (player.frame = 1);
       });
     }
+
+    onCollide("player", "enemy", async (p, e) => {
+      console.log("collided");
+      player.play("attack");
+      e.destroy();
+      const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
+      console.log(bal.toString());
+    });
   }, []);
 
   ////////////////////////////////
