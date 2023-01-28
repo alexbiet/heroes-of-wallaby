@@ -1,9 +1,6 @@
-import { CustomConnect } from "@/components/CustomConnect";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Link from "next/link";
+import { Stack, Typography } from "@mui/material";
 
-export default function Landing() {
+export default function Heroes() {
   return (
     <Stack
       sx={{
@@ -22,9 +19,8 @@ export default function Landing() {
       <Stack
         className="pixel-borders pixel-borders--2"
         sx={{
-          alignItems: "center",
+          textAlign: "center",
           background: "linear-gradient(180deg, #FFD700 0%, #FF8C00 100%)",
-          mt: "100px",
         }}
       >
         <Typography variant="h2" color="white">
@@ -34,31 +30,6 @@ export default function Landing() {
           The Dungeon of Souls
         </Typography>
       </Stack>
-      <Stack
-        sx={{
-          gap: "40px",
-          alignItems: "center",
-        }}
-      >
-        <CustomConnect />
-
-        <Button
-          onClick={() => {
-            alert("Coming soon! Learn about HoW.");
-          }}
-        >
-          ?
-        </Button>
-      </Stack>
-      <Box
-        sx={{
-          mb: "20px",
-        }}
-      >
-        <Button>
-          <Link href="/">Game</Link>
-        </Button>
-      </Box>
     </Stack>
   );
 }
