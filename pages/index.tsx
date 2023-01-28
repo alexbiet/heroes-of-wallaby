@@ -24,9 +24,8 @@ export default function Home() {
 
     const k = kaboom({
       canvas: canvasRef.current || undefined,
-      width: 400,
-      height: 400,
-      scale: 2,
+      width: 800,
+      height: 800,
     });
 
     const WGoldContract = new ethers.Contract(
@@ -128,21 +127,13 @@ export default function Home() {
     const player = add([
       sprite("dude", { frame: 0 }),
       health(3),
-      scale(0.75),
       pos(200, 100),
       solid(),
-      area(scale(0.75)),
+      area(),
       "player",
     ]);
 
-    const enemy = add([
-      sprite("clotharmor"),
-      scale(0.5),
-      solid(),
-      area(scale(0.5)),
-      pos(200, 200),
-      "enemy",
-    ]);
+    const enemy = add([sprite("clotharmor"), solid(), area(), pos(200, 200), "enemy"]);
 
     for (const dir in dirs) {
       onKeyPress(dir as Key, () => {
