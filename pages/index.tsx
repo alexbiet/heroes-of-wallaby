@@ -4,7 +4,8 @@ import { Socket } from "socket.io-client";
 import io from "socket.io-client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import kaboom, { GameObj, Key, SpriteAnimPlayOpt, Vec2 } from "kaboom";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -38,59 +39,25 @@ export default function Home() {
           to: 2,
           loop: true,
           pingpong: true,
-          speed: 5,
-        },
-        left: {
-          from: 1,
-          to: 2,
-          loop: true,
-          pingpong: true,
-          speed: 5,
+          speed: 4,
         },
         up: {
           from: 1,
           to: 2,
           loop: true,
           pingpong: true,
-          speed: 5,
+          speed: 4,
         },
         down: {
           from: 1,
           to: 2,
           loop: true,
           pingpong: true,
-          speed: 5,
+          speed: 4,
         },
         attack: {
-          from: 3,
-          to: 4,
-          loop: true,
-          pingpong: true,
-          speed: 10,
-        },
-      },
-    });
-
-    loadSprite("cloth", "/sprites/cloth.png", {
-      sliceX: 5,
-      sliceY: 9,
-      anims: {
-        right: {
-          from: 0,
-          to: 8,
-          loop: true,
-          speed: 5,
-        },
-        up: {
-          from: 11,
-          to: 21,
-          loop: true,
-          speed: 5,
-        },
-        down: {
-          from: 22,
-          to: 32,
-          loop: true,
+          from: 4,
+          to: 2,
           speed: 5,
         },
       },
@@ -104,7 +71,6 @@ export default function Home() {
       sliceX: 1,
     });
 
-
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -113,15 +79,29 @@ export default function Home() {
       up: UP,
       down: DOWN,
     };
-    const SPEED = 120;
-    const player = add([sprite("dude", { frame: 0 }), z(99), health(3), pos(200, 100), area(), "player"]);
+    const SPEED = 60;
+    const player = add([
+      sprite("dude", { frame: 0 }),
+      z(99),
+      health(3),
+      scale(0.75),
+      pos(200, 100),
+      area(),
+      "player",
+    ]);
     const map = add([sprite("map", { frame: 0 }), z(1), pos(100, 100), area(), "bush"]);
-    const dungeon = add([sprite("dungeon-1", { frame: 0 }), z(1), pos(0, 0), width()/4, height()/4, area(), "bg"]);
+    const dungeon = add([
+      sprite("dungeon-1", { frame: 0 }),
+      z(1),
+      pos(0, 0),
+      width() / 4,
+      height() / 4,
+      area(),
+      "bg",
+    ]);
     // const enemy = add([sprite("clotharmor"), pos(200, 200), "enemy"]);
 
-
-
-    document.addEventListener("keypress", function(event) {
+    document.addEventListener("keypress", function (event) {
       // console.log(event.keyCode)
       if (event.keyCode == 97) {
         player.play("attack");
@@ -182,6 +162,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Box
         sx={{
           display: "flex",
@@ -197,16 +178,23 @@ export default function Home() {
             display: "flex",
             justifyContent: "right",
             width: "100%",
-            pt: "10px",
-            margin: "0 auto",
+            mt: "20px",
+            mr: "20px",
           }}
         >
-          <Typography sx={{
-            color: "#777", paddingRight: "30px", paddingTop: "5px"}}
-            ><i>Press <b>&quot;F&quot;</b> to toggle fullscreen.</i></Typography>
-          <ConnectButton />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <Typography
+            sx={{
+              color: "#777",
+              paddingRight: "30px",
+              paddingTop: "5px",
+            }}
+          >
+            <i>
+              Press <b>&quot;F&quot;</b> to toggle fullscreen.
+            </i>
+          </Typography>
+          <ConnectButton />
         </Box>
-        
 
         <Box
           sx={{
@@ -215,6 +203,9 @@ export default function Home() {
         >
           <canvas ref={canvasRef} />
         </Box>
+        <Button>
+          <Link href="/landing">Landing</Link>
+        </Button>
       </Box>
     </>
   );
