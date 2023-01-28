@@ -110,7 +110,7 @@ export default function Home() {
       up: UP,
       down: DOWN,
     };
-    const SPEED = 60;
+    const SPEED = 100;
 
     const map = add([sprite("map", { frame: 0 }), pos(100, 100), area(), "bush"]);
     const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
