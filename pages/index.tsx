@@ -177,7 +177,7 @@ export default function Home() {
       const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
       console.log(bal.toString());
     });
-  }, []);
+  }, [provider]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
