@@ -4,6 +4,9 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import "../styles/global.css";
+import { ThemeProvider } from "@mui/system";
+import { customTheme } from "../styles/customTheme";
 
 const hyperspace: Chain = {
   id: 3_141,
@@ -44,10 +47,12 @@ const wagmiClient = createClient({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <ThemeProvider theme={customTheme}>
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains}>
+          <Component {...pageProps} />
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </ThemeProvider>
   );
 }

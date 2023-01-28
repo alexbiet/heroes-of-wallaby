@@ -4,7 +4,7 @@ import { Socket } from "socket.io-client";
 import io from "socket.io-client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import kaboom, { GameObj, Key, SpriteAnimPlayOpt, Vec2 } from "kaboom";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, ThemeProvider, Typography } from "@mui/material";
 import Link from "next/link";
 import { ethers } from "ethers";
 import { useProvider } from "wagmi";
@@ -118,6 +118,7 @@ export default function Home() {
     const player = add([
       sprite("dude", { frame: 0 }),
       health(3),
+      scale(1),
       pos(200, 100),
       solid(),
       area(),
@@ -188,7 +189,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Box
         sx={{
           display: "flex",
