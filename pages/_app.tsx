@@ -6,7 +6,7 @@ import { Chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { ThemeProvider } from "@mui/system";
-import { customTheme } from "../styles/customTheme";
+import { theme } from "../styles/theme";
 
 const hyperspace: Chain = {
   id: 3_141,
@@ -35,7 +35,7 @@ const { chains, provider } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "My RainbowKit App",
+  appName: "Heroes of Wallaby",
   chains,
 });
 
@@ -47,7 +47,7 @@ const wagmiClient = createClient({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={customTheme}>
+    <ThemeProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains}>
           <Component {...pageProps} />
