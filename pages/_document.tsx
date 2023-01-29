@@ -9,7 +9,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body style={{ backgroundColor: "#111111" }}>
+      <body>
         <Main />
         <NextScript />
       </body>

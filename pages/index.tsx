@@ -1,7 +1,9 @@
 import { CustomConnect } from "@/components/CustomConnect";
+import HelpModal from "@/components/HelpModal";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAccount, useConnect } from "wagmi";
 
@@ -20,29 +22,32 @@ export default function Landing() {
       sx={{
         alignItems: "center",
         justifyContent: "space-between",
-        maxWidth: "1100px",
+        // maxWidth: "1100px",
         height: "100vh",
         width: "100%",
         mx: "auto",
         mt: "0",
         backgroundImage: "url(/assets/welcome-screen.png)",
-        backgroundSize: "cover",
-        backgroundPosition: "bottom",
+        backgroundSize: "60%",
+        backgroundPosition: "center bottom 20px",
+        backgroundColor: "#100400",
       }}
     >
       <Stack
-        className="pixel-borders pixel-borders--2"
         sx={{
           textAlign: "center",
-          background: "linear-gradient(180deg, #FFD700 0%, #FF8C00 100%)",
+          paddingTop: "30px",
         }}
       >
-        <Typography variant="h2" color="white">
+        {/* <Typography variant="h2" color="white">
           Heroes of Wallaby
         </Typography>
         <Typography variant="h4" color="red">
           The Dungeon of Souls
-        </Typography>
+        </Typography> */}
+        
+        <Image src="/logo.png" alt="HoW: The Dungeon of Souls" width={612} height={109} /> 
+
       </Stack>
 
       <Stack
@@ -53,7 +58,7 @@ export default function Landing() {
       >
         {_isConnected ? (
           <Link href="/heroes">
-            <Button>Play</Button>
+            <Button sx={{px: "100px !important",}}>Play</Button>
           </Link>
         ) : (
           <Button onClick={openConnectModal}>Connect</Button>
@@ -65,6 +70,9 @@ export default function Landing() {
         >
           ?
         </Button>
+        
+        <HelpModal />
+
       </Stack>
       <CustomConnect />
     </Stack>

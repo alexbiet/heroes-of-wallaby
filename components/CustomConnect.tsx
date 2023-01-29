@@ -22,6 +22,7 @@ export const CustomConnect = () => {
               justifyContent: "space-between",
               width: "95%",
               color: "white",
+              paddingBottom: "15px"
             }}
           >
             <Typography>TVL: 0.00 FIL</Typography>
