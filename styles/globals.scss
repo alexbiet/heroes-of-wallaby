@@ -3,3 +3,30 @@
 body, h1, h2, h3, p, button, input {
     font-family: "Press Start 2P";
 }
+
+.pixel-border--custom {
+  @include pixel-border($corner-size: 1, $border-size: 4px, $border-color: transparent);
+}
+
+.pixel-box--light-custom {
+  @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #fff, $border-inset-color: #999, $border-inset-sides: 'all');
+}
+
+.pixel-box--primary-custom {
+  color: #fff;
+  @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #209cee, $border-inset: false);
+}
+
+.pixel-box--success-custom {
+  color: #fff;
+  @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #92cc41, $border-inset-sides: 'top-left');
+} 
+
+.pixel-box--warning-custom {
+  @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #f7d51d, $border-inset-sides: 'all');
+} 
+
+.pixel-box--error-custom {
+  color: #fff;
+  @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #e76e55, $border-color: #000);
+}

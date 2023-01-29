@@ -1,8 +1,12 @@
 import { CustomConnect } from "@/components/CustomConnect";
 import { Box, Card, CardContent, CardMedia, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+import { useState } from "react";
+import { theme } from "../styles/theme";
 
 export default function Heroes() {
+  const [selected, setSelected] = useState<number>(-1);
+
   return (
     <Stack
       sx={{
@@ -33,24 +37,61 @@ export default function Heroes() {
         </Typography>
       </Stack>
 
-      <Box>
-        <Card className="pixel-borders pixel-borders--2 " sx={{ p: 6 }}>
-          <CardMedia>
+      <Box
+        className="pixel-borders pixel-borders--2"
+        sx={{
+          background: `linear-gradient(180deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.dark} 50%, ${theme.palette.primary.main} 51%, ${theme.palette.primary.main} 100%)`,
+        }}
+      >
+        <CardContent
+          sx={{
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6">Choose Dificulty</Typography>
+        </CardContent>
+        <Card
+          onClick={() => setSelected(0)}
+          className={selected === 0 ? "pixel-borders pixel-borders--2" : "none !important"}
+          sx={{
+            margin: "0 !important",
+            padding: "0 !important",
+          }}
+        >
+          <CardMedia
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              p: 4,
+            }}
+          >
             <Image src="/assets/dungeon-1.png" height={250} width={250} alt="temp" />
           </CardMedia>
           <CardContent>
-            <Typography variant="h4">Dungeon 1</Typography>
+            <Typography variant="h5">Dungeon 1</Typography>
             <CardContent>Risk: 1</CardContent>
             <CardContent>Reward: 1</CardContent>
             <CardContent>Description: heheh</CardContent>
           </CardContent>
         </Card>
-        <Card className="pixel-borders pixel-borders--2 " sx={{ p: 6 }}>
-          <CardMedia>
+        <Card
+          onClick={() => setSelected(1)}
+          className={selected === 1 ? "pixel-borders pixel-borders--2" : "none !important"}
+          sx={{
+            p: 6,
+          }}
+        >
+          <CardMedia
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              p: 4,
+            }}
+          >
             <Image src="/assets/dungeon-1.png" height={250} width={250} alt="temp" />
           </CardMedia>
           <CardContent>
-            <Typography variant="h4">Dungeon 1</Typography>
+            <Typography variant="h5">Dungeon 1</Typography>
             <CardContent>Risk: 1</CardContent>
             <CardContent>Reward: 1</CardContent>
             <CardContent>Description: heheh</CardContent>
