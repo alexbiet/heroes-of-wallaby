@@ -63,15 +63,7 @@ export default function Landing() {
         ) : (
           <Button onClick={openConnectModal}>Connect</Button>
         )}
-        <Button
-          onClick={() => {
-            alert("Coming soon! Learn about HoW.");
-          }}
-        >
-          ?
-        </Button>
-        
-        <HelpModal />
+        <HelpModal buttonText="?" modalTitle="Help" modalText="......" />
 
       </Stack>
       <CustomConnect />

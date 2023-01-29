@@ -19,11 +19,13 @@ function HelpModal(props: modalProps) {
 
   return (
     <>
-    <Button onClick={()=> setModalStatus(!modalStatus) }>Open!</Button>
+    <Button onClick={()=> setModalStatus(!modalStatus) }>{buttonText}</Button>
 
     <Stack sx={{ display: modalStatus ? "block" : "none" }}>
 
-      modalllllllll
+    
+      <Typography variant="h1">{modalTitle}</Typography>
+      <Typography variant="body1">{modalText}</Typography>
       
       </Stack>
     </>
