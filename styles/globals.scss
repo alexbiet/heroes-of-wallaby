@@ -11,9 +11,6 @@ body {
     cursor: pointer;
 }
 
-.pixel-border--custom {
-  @include pixel-border($corner-size: 1, $border-size: 4px, $border-color: transparent);
-}
 
 .pixel-box--light-custom {
   @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #fff, $border-inset-color: #999, $border-inset-sides: 'all');
