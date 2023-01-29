@@ -39,15 +39,7 @@ export default function Landing() {
           paddingTop: "30px",
         }}
       >
-        {/* <Typography variant="h2" color="white">
-          Heroes of Wallaby
-        </Typography>
-        <Typography variant="h4" color="red">
-          The Dungeon of Souls
-        </Typography> */}
-        
-        <Image src="/logo.png" alt="HoW: The Dungeon of Souls" width={612} height={109} /> 
-
+        <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} /> 
       </Stack>
 
       <Stack

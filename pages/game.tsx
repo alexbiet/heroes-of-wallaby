@@ -2,10 +2,11 @@ import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import { Socket } from "socket.io-client";
 import io from "socket.io-client";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { CustomConnect } from "@/components/CustomConnect";
 import kaboom, { GameObj, Key, SpriteAnimPlayOpt, Vec2 } from "kaboom";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Stack } from "@mui/material";
 import Link from "next/link";
+import Image from "next/image";
 import { ethers } from "ethers";
 import { useProvider } from "wagmi";
 
@@ -26,6 +27,7 @@ export default function Home() {
       canvas: canvasRef.current || undefined,
       width: 800,
       height: 800,
+      scale: 0.8
     });
 
     const WGoldContract = new ethers.Contract(
@@ -182,57 +184,72 @@ export default function Home() {
   };
 
   return (
-    <>
-      <Head>
-        <title>Heroes of Wallaby</title>
-        <meta name="description" content="The all-mighty battle of Filecoinia!" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.png" />
-      </Head>
-      <Box
+    <Stack
+      sx={{
+        alignItems: "center",
+        justifyContent: "space-between",
+        // maxWidth: "1100px",
+        height: "100vh",
+        width: "100%",
+        mx: "auto",
+        mt: "0",
+        backgroundImage: "url(/assets/welcome-screen.png)",
+        backgroundSize: "60%",
+        backgroundPosition: "center bottom 20px",
+        backgroundColor: "#100400",
+      }}
+    >
+      <Stack
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "100vh",
-          backgroundColor: "#111",
-          verticalAlign: "middle",
+          textAlign: "center",
+          paddingTop: "30px",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "right",
-            width: "100%",
-            mt: "20px",
-            mr: "20px",
-          }}
-        >
-          <Typography
-            sx={{
-              color: "#777",
-              paddingRight: "30px",
-              paddingTop: "5px",
-            }}
-          >
-            <i>
-              Press <b>&quot;F&quot;</b> to toggle fullscreen.
-            </i>
-          </Typography>
-          <ConnectButton />
-        </Box>
+        <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} /> 
+      </Stack>
 
         <Box
           sx={{
-            border: "5px solid brown",
           }}
         >
-          <canvas ref={canvasRef} />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            
+            <Typography
+              sx={{
+                color: "#777",
+                py: "5px",
+              }}
+            ><small>
+              <i>
+                Press <b>&quot;F&quot;</b> to toggle fullscreen.
+              </i></small>
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              border: "5px solid brown",
+              display: "block",
+              backgroundColor: "#111111",
+            }}
+          >
+            <canvas ref={canvasRef} style={{margin:"0", padding:"0"}}/>
+          </Box>
+          <Link href="/heroes">
+          <Button style={{position: "absolute", top: "20px", right: "10px"
+            }}>
+            MENU
+          </Button>
+          </Link>
+
         </Box>
-        <Button>
-          <Link href="/landing">Landing</Link>
-        </Button>
-      </Box>
-    </>
+        <CustomConnect />
+    </Stack>
   );
 }
