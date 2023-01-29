@@ -4,10 +4,6 @@ body, h1, h2, h3, p, button, input {
     font-family: "Press Start 2P";
 }
 
-.pixel-border--custom {
-  @include pixel-border($corner-size: 1, $border-size: 4px, $border-color: transparent);
-}
-
 .pixel-box--light-custom {
   @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #fff, $border-inset-color: #999, $border-inset-sides: 'all');
 }
