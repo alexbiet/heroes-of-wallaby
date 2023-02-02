@@ -42,3 +42,8 @@ button:hover, a:hover {
   color: #fff;
   @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #e76e55, $border-color: #000);
 }
+
+
+.nes-icon.close:hover {
+    opacity: 0.7;
+}
