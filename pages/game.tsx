@@ -105,6 +105,8 @@ export default function Home() {
       sliceY: 9,
     });
 
+    loadSprite("square", "/assets/square.png");
+
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -113,59 +115,70 @@ export default function Home() {
       up: UP,
       down: DOWN,
     };
-    const SPEED = 100;
+    const SPEED = 300;
 
     const map = add([sprite("map", { frame: 0 }), pos(100, 100), area(), "bush"]);
     const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
 
     const level = addLevel(
       [
-        "==========================",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "=                       =",
-        "==========================",
+        "====================",
+        "=========xx=========",
+        "=========  =========",
+        "==      =  ==      =",
+        "==      =  ==      =",
+        "==    = =  ==      =",
+        "==      =  ==      =",
+        "====   ==        ===",
+        "====             ===",
+        "====      =      ===",
+        "====     ==      ===",
+        "==                 =",
+        "==                 =",
+        "==                 =",
+        "==           =     =",
+        "==                 =",
+        "==      =  =       =",
+        "==      =  =       =",
+        "==      =  =       =",
+        "====================",
       ],
+
       {
-        width: 32,
-        height: 32,
-        pos: vec2(0, 0),
+        width: 40,
+        height: 40,
         "=": () => [
           "wall",
           solid(),
-          area({
-            width: 32,
-            height: 32,
+          sprite("square", {
+            width: 40,
+            height: 40,
           }),
+          area(),
+        ],
+        x: () => [
+          "door",
+          solid(),
+          sprite("square", {
+            width: 40,
+            height: 40,
+          }),
+          color(0, 0, 255),
+          area(),
         ],
       }
     );
 
     const player = add([
-      sprite("dude", { frame: 0 }),
+      sprite("dude"),
       health(3),
-      scale(1),
       pos(200, 100),
       solid(),
-      area(),
+      area({
+        width: 40,
+        height: 40,
+        offset: vec2(40, 40),
+      }),
       "player",
     ]);
 
