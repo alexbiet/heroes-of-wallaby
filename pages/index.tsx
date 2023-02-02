@@ -38,8 +38,10 @@ export default function Landing() {
           textAlign: "center",
           paddingTop: "30px",
         }}
-      >
-        <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} /> 
+      > 
+        <Link href="/">
+          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} /> 
+        </Link>
       </Stack>
 
       <Stack

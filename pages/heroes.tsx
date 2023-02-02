@@ -28,7 +28,9 @@ export default function Heroes() {
           paddingTop: "30px",
         }}
       >
-        <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} />
+        <Link href="/">
+          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} />
+        </Link>
       </Stack>
       <Typography variant="h6" color="common.white">
         Choose Hero

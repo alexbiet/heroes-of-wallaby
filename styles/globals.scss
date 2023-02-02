@@ -4,6 +4,10 @@ body, h1, h2, h3, p, button, input {
     font-family: "Press Start 2P";
 }
 
+a:focus, button:focus {
+    outline: none !important;
+}
+
 body {
     margin: 0px;
     padding: 0px;
