@@ -28,8 +28,16 @@ contract HeroesOfWallaby is
     }
 
     //////////////////////////////////////////
-    //////////////  URI LOGIC    //////////////
-    ///////////////////////////////////////////
+    //////////////  TREASURY LOGIC    ////////
+    //////////////////////////////////////////
+
+    uint256 public totalStaked = 0;
+    uint256 public totalRewards = 0;
+    uint256 public totalWithdrawn = 0;
+
+    //////////////////////////////////////////
+    //////////////  URI LOGIC    /////////////
+    //////////////////////////////////////////
     function _baseURI() internal view override returns (string memory) {
         return baseURIConstructor;
     }
@@ -46,11 +54,11 @@ contract HeroesOfWallaby is
     }
 
     //////////////////////////////////////////
-    //////////////  MINT LOGIC    /////////////
-    ///////////////////////////////////////////
+    //////////////  MINT LOGIC    ////////////
+    //////////////////////////////////////////
 
     //0.1 tFil
-    uint256 stakeToMint = 100000000000000000;
+    uint256 public stakeToMint = 100000000000000000;
 
     function depositMint() public payable {
         require(msg.value == stakeToMint);
@@ -72,8 +80,48 @@ contract HeroesOfWallaby is
         _setTokenURI(tokenId, uri);
     }
 
-    // The following functions are overrides required by Solidity.
+    ////////////////////////////////////////////////
+    //////////  Character Stats Logic    ///////////
+    ////////////////////////////////////////////////
 
+    enum Status {
+        Idle,
+        Resting
+    }
+
+    struct Hero {
+        uint256 id;
+        uint256 prestige;
+        Status status;
+    }
+
+    mapping(uint256 => Hero) public idToHero;
+
+    function getHero(uint256 _id) public view returns (Hero memory) {
+        return idToHero[_id];
+    }
+
+    function prestigeUp(uint256 _id) public onlyOwner {
+        require(ownerOf(_id) == msg.sender);
+        idToHero[_id].prestige += 1;
+    }
+
+    function setStatus(uint256 _id, Status _status) public onlyOwner {
+        require(ownerOf(_id) == msg.sender);
+        idToHero[_id].status = _status;
+    }
+
+    //////////////////////////////////////////
+    //////////////  Game Logic    ////////////
+    //////////////////////////////////////////
+
+    function startGame(uint256 _id) public {
+        require(ownerOf(_id) == msg.sender);
+        require(idToHero[_id].status == Status.Idle, "Hero is not idle");
+        idToHero[_id].status = Status.Resting;
+    }
+
+    // The following functions are overrides required by Solidity.
     function _beforeTokenTransfer(
         address from,
         address to,

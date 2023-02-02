@@ -27,7 +27,7 @@ export default function Home() {
       canvas: canvasRef.current || undefined,
       width: 800,
       height: 800,
-      scale: 0.8
+      scale: 0.8,
     });
 
     const WGoldContract = new ethers.Contract(
@@ -89,6 +89,7 @@ export default function Home() {
           from: 4,
           to: 2,
           speed: 5,
+          loop: true,
         },
       },
     });
@@ -157,7 +158,7 @@ export default function Home() {
 
     onCollide("player", "enemy", async (p, e) => {
       console.log("collided");
-      player.play("attack");
+      await player.play("attack");
       e.destroy();
       const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
       console.log(bal.toString());
@@ -206,52 +207,46 @@ export default function Home() {
         }}
       >
         <Link href="/">
-          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} /> 
+          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} />
         </Link>
       </Stack>
 
+      <Box sx={{}}>
         <Box
           sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
           }}
         >
-          <Box
+          <Typography
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
+              color: "#777",
+              py: "5px",
             }}
           >
-            
-            <Typography
-              sx={{
-                color: "#777",
-                py: "5px",
-              }}
-            ><small>
+            <small>
               <i>
                 Press <b>&quot;F&quot;</b> to toggle fullscreen.
-              </i></small>
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              border: "5px solid brown",
-              display: "block",
-              backgroundColor: "#111111",
-            }}
-          >
-            <canvas ref={canvasRef} style={{margin:"0", padding:"0"}}/>
-          </Box>
-          <Link href="/heroes">
-          <Button style={{position: "absolute", top: "20px", right: "10px"
-            }}>
-            MENU
-          </Button>
-          </Link>
-
+              </i>
+            </small>
+          </Typography>
         </Box>
-        <CustomConnect />
+
+        <Box
+          sx={{
+            border: "5px solid brown",
+            display: "block",
+            backgroundColor: "#111111",
+          }}
+        >
+          <canvas ref={canvasRef} style={{ margin: "0", padding: "0" }} />
+        </Box>
+        <Link href="/heroes">
+          <Button style={{ position: "absolute", top: "20px", right: "10px" }}>MENU</Button>
+        </Link>
+      </Box>
+      <CustomConnect />
     </Stack>
   );
 }

@@ -19,11 +19,11 @@ const hyperspace: Chain = {
   },
   rpcUrls: {
     default: {
-      http: ["https://api.hyperspace.node.glif.io/rpc/v0"],
+      http: ["https://filecoin-hyperspace.chainstacklabs.com/rpc/v1"],
       webSocket: [""],
     },
     public: {
-      http: ["https://api.hyperspace.node.glif.io/rpc/v0"],
+      http: ["https://filecoin-hyperspace.chainstacklabs.com/rpc/v1"],
       webSocket: [""],
     },
   },

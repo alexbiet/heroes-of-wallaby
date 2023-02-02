@@ -3,9 +3,6 @@ import { Box, Card, CardContent, CardMedia, Stack, Typography, Button } from "@m
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { theme } from "../styles/theme";
-
-
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(-1);
@@ -15,7 +12,6 @@ export default function Heroes() {
       sx={{
         alignItems: "center",
         justifyContent: "space-between",
-        // maxWidth: "1100px",
         height: "100vh",
         width: "100%",
         mx: "auto",
@@ -33,144 +29,147 @@ export default function Heroes() {
         }}
       >
         <Link href="/">
-          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} /> 
+          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} />
         </Link>
       </Stack>
-
-      <Box>
-        <CardContent
-          sx={{
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="h6">Choose Hero</Typography>
-
-        </CardContent>
-
-
-        <Stack sx={{
-            display: "inline-block", 
-            marginRight: "10px",
-            }}>
-        <Card
-          onClick={() => setSelected(0)}
-          className={selected === 0 ? "pixel-borders pixel-borders--2" : " "}
-          sx={{
-            padding: "0 !important",
-            textAlign : "center",
-            margin: "0 !important",
-            display: "block !important",
-          }}
-        >  
-          <CardContent>
-            <Typography variant="h6">Swardarian</Typography>
-            <Typography variant="body1">Level 4</Typography>
-          </CardContent>
-          <CardMedia
+      <Typography variant="h6" color="common.white">
+        Choose Hero
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Stack sx={{}}>
+          <Card
+            onClick={() => setSelected(0)}
+            className={selected === 0 ? "pixel-borders pixel-borders--2" : " "}
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              p: 4,
+              padding: "0 !important",
+              textAlign: "center",
+              margin: "0 !important",
+              display: "block !important",
+              maxWidth: "400px",
+              width: "100%",
             }}
           >
-            <Image src="/assets/hero-1.png" height={200} width={200} alt="Swardarian" />
-          </CardMedia>
-          <CardContent>
-            <CardContent>Life: &nbsp;
-              <i className="nes-icon heart"></i>
-              <i className="nes-icon heart"></i>
-              <i className="nes-icon heart"></i>
+            <CardContent>
+              <Typography variant="h6">Swardarian</Typography>
+              <Typography variant="body1">Level 4</Typography>
+            </CardContent>
+            <CardMedia
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                p: 4,
+              }}
+            >
+              <Image src="/assets/hero-1.png" height={200} width={200} alt="Swardarian" />
+            </CardMedia>
+            <CardContent>
+              <CardContent>
+                Life: &nbsp;
+                <i className="nes-icon heart"></i>
+                <i className="nes-icon heart"></i>
+                <i className="nes-icon heart"></i>
               </CardContent>
-            <CardContent>Stake: 2 FIL</CardContent>
-            <CardContent>Rewards: 0.52 FIL</CardContent>
-          </CardContent>
-        </Card>
+              <CardContent>Stake: 2 FIL</CardContent>
+              <CardContent>Rewards: 0.52 FIL</CardContent>
+            </CardContent>
+          </Card>
 
-        <Link href="/difficulty">
-            <Button sx={{px: "100px !important",}}>Pick</Button>
-        </Link>
-        <Button className="nes-btn is-error">Burn</Button>
-
+          <Link href="/difficulty" passHref>
+            <Button
+              className="nes-btn "
+              sx={{
+                width: "100%",
+              }}
+            >
+              Pick
+            </Button>
+          </Link>
+          <Button className="nes-btn is-error">Burn</Button>
         </Stack>
 
-        <Stack sx={{
-            display: "inline-block", 
-            marginRight: "10px",
-            }}>
-
-        <Card
-          onClick={() => setSelected(1)}
-          className={selected === 1 ? "pixel-borders pixel-borders--2" : " "}
-          sx={{
-            padding: "0 !important",
-            textAlign : "center",
-            margin: "0 !important",
-            display: "block !important",
-          }}
-        >
-          <CardContent>
-            <Typography variant="h6">Barberino</Typography>
-            <Typography variant="body1">Level 1</Typography>
-          </CardContent>
-          <CardMedia
+        <Stack sx={{}}>
+          <Card
+            onClick={() => setSelected(1)}
+            className={selected === 1 ? "pixel-borders pixel-borders--2" : " "}
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              p: 4,
+              padding: "0 !important",
+              textAlign: "center",
+              margin: "0 !important",
+              display: "block !important",
+              maxWidth: "400px",
+              width: "100%",
             }}
           >
-            <Image src="/assets/hero-2.png" height={200} width={200} alt="Barberino" />
-          </CardMedia>
-          <CardContent>
-            <CardContent>Life: &nbsp;
-              <i className="nes-icon heart"></i>
-              <i className="nes-icon heart"></i>
-              <i className="nes-icon heart"></i>
+            <CardContent>
+              <Typography variant="h6">Barberino</Typography>
+              <Typography variant="body1">Level 1</Typography>
+            </CardContent>
+            <CardMedia
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                p: 4,
+              }}
+            >
+              <Image src="/assets/hero-2.png" height={200} width={200} alt="Barberino" />
+            </CardMedia>
+            <CardContent>
+              <CardContent>
+                Life: &nbsp;
+                <i className="nes-icon heart"></i>
+                <i className="nes-icon heart"></i>
+                <i className="nes-icon heart"></i>
               </CardContent>
-            <CardContent>Stake: 2 FIL</CardContent>
-            <CardContent>Cost: 1 FIL</CardContent>
-          </CardContent>
-        </Card>
-        <Button>Mint</Button>
+              <CardContent>Stake: 2 FIL</CardContent>
+              <CardContent>Rewards: 1.52 FIL</CardContent>
+            </CardContent>
+          </Card>
+          <Button>Mint</Button>
         </Stack>
 
-
-        <Stack sx={{display: "inline-block"}}>
-        <Card
-          onClick={() => setSelected(2)}
-          className={selected === 2 ? "pixel-borders pixel-borders--2" : " "}
-          sx={{
-            padding: "0 !important",
-            textAlign : "center",
-            margin: "0 !important",
-            display: "block !important",
-          }}
-        >
-          <CardContent>
-            <Typography variant="h6">Wallamaster</Typography>
-            <Typography variant="body1">Level 1</Typography>
-          </CardContent>
-          <CardMedia
+        <Stack>
+          <Card
+            onClick={() => setSelected(2)}
+            className={selected === 2 ? "pixel-borders pixel-borders--2" : " "}
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              p: 4,
+              padding: "0 !important",
+              textAlign: "center",
+              margin: "0 !important",
+              display: "block !important",
+              maxWidth: "400px",
+              width: "100%",
             }}
           >
-            <Image src="/assets/hero-3.png" height={200} width={200} alt="Wallamaster" />
-          </CardMedia>
-          <CardContent>
-            <CardContent>Life: &nbsp;
-              <i className="nes-icon heart"></i>
-              <i className="nes-icon heart"></i>
-              <i className="nes-icon heart"></i>
+            <CardContent>
+              <Typography variant="h6">Wallamaster</Typography>
+              <Typography variant="body1">Level 1</Typography>
+            </CardContent>
+            <CardMedia
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                p: 4,
+              }}
+            >
+              <Image src="/assets/hero-3.png" height={200} width={200} alt="Wallamaster" />
+            </CardMedia>
+            <CardContent>
+              <CardContent>
+                Life: &nbsp;
+                <i className="nes-icon heart"></i>
+                <i className="nes-icon heart"></i>
+                <i className="nes-icon heart"></i>
               </CardContent>
-            <CardContent>Stake: 2 FIL</CardContent>
-            <CardContent>Cost: 1 FIL</CardContent>
-          </CardContent>
-        </Card>
-        <Button>Mint</Button>
-        
+              <CardContent>Stake: 2 FIL</CardContent>
+              <CardContent>Rewards: 2.52 FIL</CardContent>
+            </CardContent>
+          </Card>
+          <Button>Mint</Button>
         </Stack>
       </Box>
 

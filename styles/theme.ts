@@ -22,7 +22,6 @@ export const theme = createTheme({
         variant: "contained",
         disableRipple: true,
       },
-
       variants: [
         {
           props: { variant: "contained" },
