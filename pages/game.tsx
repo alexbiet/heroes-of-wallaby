@@ -118,6 +118,47 @@ export default function Home() {
     const map = add([sprite("map", { frame: 0 }), pos(100, 100), area(), "bush"]);
     const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
 
+    const level = addLevel(
+      [
+        "==========================",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "=                       =",
+        "==========================",
+      ],
+      {
+        width: 32,
+        height: 32,
+        pos: vec2(0, 0),
+        "=": () => [
+          "wall",
+          solid(),
+          area({
+            width: 32,
+            height: 32,
+          }),
+        ],
+      }
+    );
+
     const player = add([
       sprite("dude", { frame: 0 }),
       health(3),
@@ -158,7 +199,7 @@ export default function Home() {
 
     onCollide("player", "enemy", async (p, e) => {
       console.log("collided");
-      await player.play("attack");
+      p.play("attack");
       e.destroy();
       const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
       console.log(bal.toString());
