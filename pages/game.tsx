@@ -205,7 +205,9 @@ export default function Home() {
           paddingTop: "30px",
         }}
       >
-        <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} /> 
+        <Link href="/">
+          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} /> 
+        </Link>
       </Stack>
 
         <Box
