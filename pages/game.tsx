@@ -9,6 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ethers } from "ethers";
 import { useProvider } from "wagmi";
+import RoundModal from "@/components/RoundModal";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -21,7 +22,7 @@ export default function Home() {
       await fetch("/api/socket");
       setSocket(io("", { query: { name: "John Smith" } }));
     };
-    socketInitializer();
+    // socketInitializer();
 
     const k = kaboom({
       canvas: canvasRef.current || undefined,
@@ -60,6 +61,16 @@ export default function Home() {
     onKeyPress("f", () => {
       fullscreen(!isFullscreen());
     });
+
+    loadSprite("press-play", "/assets/press-play.png", {sliceX: 2, anims: {
+      idle: {
+        from: 0,
+        to: 1,
+        loop: true,
+        pingpong: true,
+        speed: 2,
+      }
+    }});
 
     loadSprite("dude", "/assets/dude.png", {
       sliceX: 5,
@@ -121,6 +132,8 @@ export default function Home() {
     const SPEED = 300;
 
     const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
+    const pressPlay = add([sprite("press-play"), scale(1)]);
+    pressPlay.play("idle");
 
     const level = addLevel(
       [
@@ -198,6 +211,10 @@ export default function Home() {
     const enemy = add([sprite("clotharmor"), solid(), area(), pos(200, 200), "enemy"]);
 
     for (const dir in dirs) {
+      onMouseDown( () => {
+        if(pressPlay) pressPlay.destroy();
+      })
+
       onKeyPress(dir as Key, () => {
         if (dir === "left") {
           player.play("right");
@@ -251,6 +268,9 @@ export default function Home() {
     socket?.emit("input-change", e.target.value);
   };
 
+
+  const [activeCanvas, setActiveCanvas] = useState(false);
+
   return (
     <Stack
       sx={{
@@ -271,11 +291,24 @@ export default function Home() {
         sx={{
           textAlign: "center",
           paddingTop: "30px",
+          width: "100%",
+          marginBottom: "-70px",
         }}
       >
         <Link href="/">
           <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} />
         </Link>
+
+        <Link href="/heroes">
+          <Button style={{ float: "right", marginTop: "-60px" }}>MENU</Button>
+        </Link>
+
+        {/* TEMP */}
+        <Box sx={{ float: "right", marginRight: "0" }}>
+          <RoundModal buttonColor="success" buttonText="Win" modalTitle="Round 1 Completed!" modalText="<b>.....</b>" />
+          <RoundModal buttonColor="error" buttonText="Loss" modalTitle="Round 1 Failed!" modalText="<b>.....</b>" />
+        </Box>
+
       </Stack>
 
       <Box sx={{}}>
@@ -289,7 +322,9 @@ export default function Home() {
           <Typography
             sx={{
               color: "#777",
-              py: "5px",
+              p: "0",
+              m: "0",
+              pb: "10px",
             }}
           >
             <small>
@@ -307,11 +342,13 @@ export default function Home() {
             backgroundColor: "#111111",
           }}
         >
-          <canvas ref={canvasRef} style={{ margin: "0", padding: "0" }} />
+          <canvas 
+            ref={canvasRef} 
+            style={{ margin: "0", padding: "0" }} 
+            />
+            
         </Box>
-        <Link href="/heroes">
-          <Button style={{ position: "absolute", top: "20px", right: "10px" }}>MENU</Button>
-        </Link>
+        
       </Box>
       <CustomConnect />
     </Stack>

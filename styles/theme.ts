@@ -71,6 +71,22 @@ export const theme = createTheme({
             },
           },
         },
+        {
+          props: { variant: "contained", color: "secondary" },
+          style: {
+            color: "#000",     
+            background: "linear-gradient(180deg, #AADBFF 0%, #AADBFF 50%, #E9F6FF 50.1%, #E9F6FF 100%) !important",
+            "&:hover": {
+              backgroundColor: "#222",
+              color: "#20A1FE",
+            },
+            "&:active": {
+              backgroundColor: "#000",
+              color: "#20A1FE",
+              
+            },
+          },
+        },
       ],
     },
     MuiCard: {

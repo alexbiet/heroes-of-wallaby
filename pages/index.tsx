@@ -51,7 +51,7 @@ export default function Landing() {
         }}
       >
         {_isConnected ? (
-          <Link href="/heroes">
+          <Link href="/heroes" passHref>
             <Button sx={{px: "100px !important",}}>Play</Button>
           </Link>
         ) : (
