@@ -108,6 +108,8 @@ export default function Home() {
       sliceY: 5,
     });
 
+    loadSprite("portal", "/assets/portal.png");
+
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -124,11 +126,11 @@ export default function Home() {
       [
         "====================",
         "=========x==========",
-        "========== =========",
-        "==      == ==     ==",
-        "==      == ==     ==",
-        "==    = == ==     ==",
-        "==      == ==     ==",
+        "=========- =========",
+        "==      =- ==     ==",
+        "==      =- ==     ==",
+        "==    = =- ==     ==",
+        "==      =- ==     ==",
         "====   ==        ===",
         "====             ===",
         "====      =      ===",
@@ -138,7 +140,7 @@ export default function Home() {
         "==           =    ==",
         "==        =  =    ==",
         "==                ==",
-        "==      =  =      ==",
+        "==      =- =      ==",
         "====================",
         "====================",
         "====================",
@@ -153,6 +155,14 @@ export default function Home() {
 
           area({
             width: 40,
+            height: 40,
+          }),
+        ],
+        "-": () => [
+          "halfwall",
+          solid(),
+          area({
+            width: 30,
             height: 40,
           }),
         ],
@@ -178,8 +188,8 @@ export default function Home() {
       pos(200, 100),
       solid(),
       area({
-        width: 39,
-        height: 39,
+        width: 40,
+        height: 40,
         offset: vec2(40, 40),
       }),
       "player",
