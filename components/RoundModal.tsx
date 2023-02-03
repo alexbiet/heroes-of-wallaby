@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography, Icon } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -22,7 +22,7 @@ function RoundModal(props: modalProps) {
 
   return (
     <>
-    <Button onClick={()=> setModalStatus(!modalStatus) } sx={{padding: "10px 20px 10px 20px !important", float: "right", marginBottom: "-50px"}} color={buttonColor}>{buttonText}</Button>
+    <Button onClick={()=> setModalStatus(!modalStatus) } sx={{padding: "10px 20px 10px 20px !important", float: "right", marginBottom: "-50px"}} color={buttonColor == "success" ? "success" : "error"}>{buttonText}</Button>
 
     <Stack className="pixel-borders--2" sx={{ 
         display: modalStatus ? "block" : "none",
