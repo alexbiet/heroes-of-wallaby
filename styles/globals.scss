@@ -26,7 +26,7 @@ button:hover, a:hover {
 
 .pixel-box--primary-custom {
   color: #fff;
-  @include pixel-box($corner-size: 1, $border-size: 4px, $background-color: #209cee, $border-inset: false);
+  @include pixel-box($corner-size: 2, $border-size: 4px, $background-color: #75C4FF, $border-inset: false);
 }
 
 .pixel-box--success-custom {
@@ -47,3 +47,4 @@ button:hover, a:hover {
 .nes-icon.close:hover {
     opacity: 0.7;
 }
+

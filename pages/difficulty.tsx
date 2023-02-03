@@ -6,7 +6,7 @@ import { useState } from "react";
 import { theme } from "../styles/theme";
 
 export default function Heroes() {
-  const [selected, setSelected] = useState<number>(-1);
+  const [selected, setSelected] = useState<number>(0);
 
   return (
     <Stack
@@ -31,31 +31,21 @@ export default function Heroes() {
         }}
       > 
         <Link href="/">
-          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} /> 
+          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} />
         </Link>
       </Stack>
 
-      <Box
-        className="pixel-borders pixel-borders--2"
-        sx={{
-          background: `linear-gradient(180deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.dark} 50%, ${theme.palette.primary.main} 51%, ${theme.palette.primary.main} 100%)`,
-          maxWidth: "1000px",
-          textAlign: "center",
-        }}
-      >
-        <CardContent
-          sx={{
-            textAlign: "center",
-          }}
-        >
-          <Typography variant="h6">Choose Difficulty</Typography>
+      <Typography variant="h6" color="common.white">Choose Difficulty</Typography>
 
-        </CardContent>
-
+      <Box sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "20px",
+        }}>
 
         <Card
           onClick={() => setSelected(0)}
-          className={selected === 0 ? "pixel-borders pixel-borders--2" : "none !important"}
+          className={selected === 0 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -71,20 +61,25 @@ export default function Heroes() {
               p: 4,
             }}
           >
-            <Image src="/assets/dungeon-1.png" height={200} width={200} alt="Easy" />
+            <Image src="/assets/easy.png" height={226} width={226} alt="Easy" style={{border: "3px solid #fff", }}/>
           </CardMedia>
-          <CardContent>
-            <Typography variant="h5">Easy</Typography>
-            <small>
-            <CardContent>Risk: 1</CardContent>
-            <CardContent>Reward: 1</CardContent>
-            <CardContent>Description: heheh</CardContent>
-            </small>
+          <CardContent sx={{marginTop: "-10px", paddingTop: "0 !important", paddingBottom: "0 !important"}}>
+            <Typography variant="h6" sx={{ color: selected === 0 ? "#20A1FE" : "black"}}>Easy</Typography>
           </CardContent>
+            <small>
+            <CardContent>
+            Reward: 0.1% FIL
+            <br />
+            <br />
+            Risk: 0% stake
+            <br />
+            <br />
+            Description: heheh</CardContent>
+            </small>
         </Card>
         <Card
           onClick={() => setSelected(1)}
-          className={selected === 1 ? "pixel-borders pixel-borders--2" : "none !important"}
+          className={selected === 1 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -100,21 +95,26 @@ export default function Heroes() {
               p: 4,
             }}
           >
-            <Image src="/assets/dungeon-2.png" height={200} width={200} alt="Medium" />
+            <Image src="/assets/medium.png" height={226} width={226} alt="Medium" style={{border: "3px solid #fff", }} />
           </CardMedia>
-          <CardContent>
-            <Typography variant="h5">Medium</Typography>
-            <small>
-            <CardContent>Risk: 1</CardContent>
-            <CardContent>Reward: 1</CardContent>
-            <CardContent>Description: heheh</CardContent>
-            </small>
+          <CardContent sx={{marginTop: "-10px", paddingTop: "0 !important", paddingBottom: "0 !important"}}>
+            <Typography variant="h6" sx={{ color: selected === 1 ? "#20A1FE" : "black"}}>Medium</Typography>
           </CardContent>
+            <small>
+            <CardContent>
+            Reward: 4% FIL
+            <br />
+            <br />
+            Risk: -2% stake
+            <br />
+            <br />
+            Earn 0.5 Prestige</CardContent>
+            </small>
         </Card>
 
         <Card
           onClick={() => setSelected(2)}
-          className={selected === 2 ? "pixel-borders pixel-borders--2" : " "}
+          className={selected === 2 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -129,22 +129,28 @@ export default function Heroes() {
               p: 4,
             }}
           >
-            <Image src="/assets/dungeon-3.png" height={200} width={200} alt="DeGen" />
+            <Image src="/assets/hard.png" height={226} width={226} alt="DeGen" style={{border: "3px solid #fff", }} />
           </CardMedia>
-          <CardContent>
-            <Typography variant="h5">DeGen Mode</Typography>
-            <small>
-            <CardContent>Risk: 1</CardContent>
-            <CardContent>Reward: 1</CardContent>
-            <CardContent>Description: heheh</CardContent>
-            </small>
+          <CardContent sx={{marginTop: "-10px", paddingTop: "0 !important", paddingBottom: "0 !important"}}>
+            <Typography variant="h6" sx={{ color: selected === 2 ? "#20A1FE" : "black"}}>DeGen Mode</Typography>
           </CardContent>
+            <small>
+            <CardContent>
+            Reward: 10% FIL
+            <br />
+            <br />
+            Risk: -6% stake
+            <br />
+            <br />
+            Earn 1 Prestige</CardContent>
+            </small>
         </Card>
+
+      </Box>
 
         <Link href="/game">
             <Button sx={{px: "100px !important", display: "block"}}>Start Game</Button>
         </Link>
-      </Box>
 
       <CustomConnect />
     </Stack>

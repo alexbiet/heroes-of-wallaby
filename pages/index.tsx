@@ -57,7 +57,7 @@ export default function Landing() {
         ) : (
           <Button onClick={openConnectModal}>Connect</Button>
         )}
-        <HelpModal buttonText="?" modalTitle="Help" modalText="......" />
+        <HelpModal buttonText="?" modalTitle="Help" modalText="<b>.....</b>" />
 
       </Stack>
       <CustomConnect />
