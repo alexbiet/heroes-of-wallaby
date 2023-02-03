@@ -94,10 +94,6 @@ export default function Home() {
       },
     });
 
-    loadSprite("map", "/tiles/7.png", {
-      sliceX: 5,
-    });
-
     loadSprite("dungeon-1", "/assets/dungeon-1.png", {});
 
     loadSprite("clotharmor", "/assets/clotharmor.png", {
@@ -106,6 +102,11 @@ export default function Home() {
     });
 
     loadSprite("square", "/assets/square.png");
+
+    loadSprite("door", "/assets/door.png", {
+      sliceX: 8,
+      sliceY: 5,
+    });
 
     const dirs: {
       [key: string]: Vec2;
@@ -117,30 +118,29 @@ export default function Home() {
     };
     const SPEED = 300;
 
-    const map = add([sprite("map", { frame: 0 }), pos(100, 100), area(), "bush"]);
     const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
 
     const level = addLevel(
       [
         "====================",
-        "=========xx=========",
-        "=========  =========",
-        "==      =  ==      =",
-        "==      =  ==      =",
-        "==    = =  ==      =",
-        "==      =  ==      =",
+        "=========x==========",
+        "========== =========",
+        "==      == ==     ==",
+        "==      == ==     ==",
+        "==    = == ==     ==",
+        "==      == ==     ==",
         "====   ==        ===",
         "====             ===",
         "====      =      ===",
         "====     ==      ===",
-        "==                 =",
-        "==                 =",
-        "==                 =",
-        "==           =     =",
-        "==                 =",
-        "==      =  =       =",
-        "==      =  =       =",
-        "==      =  =       =",
+        "==                ==",
+        "==                ==",
+        "==           =    ==",
+        "==        =  =    ==",
+        "==                ==",
+        "==      =  =      ==",
+        "====================",
+        "====================",
         "====================",
       ],
 
@@ -150,21 +150,24 @@ export default function Home() {
         "=": () => [
           "wall",
           solid(),
-          sprite("square", {
+
+          area({
             width: 40,
             height: 40,
           }),
-          area(),
         ],
         x: () => [
           "door",
           solid(),
-          sprite("square", {
-            width: 40,
+          sprite("door", {
+            width: 80,
+            height: 80,
+            frame: 35,
+          }),
+          area({
+            width: 80,
             height: 40,
           }),
-          color(0, 0, 255),
-          area(),
         ],
       }
     );
@@ -175,8 +178,8 @@ export default function Home() {
       pos(200, 100),
       solid(),
       area({
-        width: 40,
-        height: 40,
+        width: 39,
+        height: 39,
         offset: vec2(40, 40),
       }),
       "player",
