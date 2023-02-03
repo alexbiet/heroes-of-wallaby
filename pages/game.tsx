@@ -94,16 +94,21 @@ export default function Home() {
       },
     });
 
-    loadSprite("map", "/tiles/7.png", {
-      sliceX: 5,
-    });
-
     loadSprite("dungeon-1", "/assets/dungeon-1.png", {});
 
     loadSprite("clotharmor", "/assets/clotharmor.png", {
       sliceX: 5,
       sliceY: 9,
     });
+
+    loadSprite("square", "/assets/square.png");
+
+    loadSprite("door", "/assets/door.png", {
+      sliceX: 8,
+      sliceY: 5,
+    });
+
+    loadSprite("portal", "/assets/portal.png");
 
     const dirs: {
       [key: string]: Vec2;
@@ -113,18 +118,80 @@ export default function Home() {
       up: UP,
       down: DOWN,
     };
-    const SPEED = 100;
+    const SPEED = 300;
 
-    const map = add([sprite("map", { frame: 0 }), pos(100, 100), area(), "bush"]);
     const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
 
+    const level = addLevel(
+      [
+        "====================",
+        "=========x==========",
+        "=========- =========",
+        "==      =- ==     ==",
+        "==      =- ==     ==",
+        "==    = =- ==     ==",
+        "==      =- ==     ==",
+        "====   ==        ===",
+        "====             ===",
+        "====      =      ===",
+        "====     ==      ===",
+        "==                ==",
+        "==                ==",
+        "==           =    ==",
+        "==        =  =    ==",
+        "==                ==",
+        "==      =- =      ==",
+        "====================",
+        "====================",
+        "====================",
+      ],
+
+      {
+        width: 40,
+        height: 40,
+        "=": () => [
+          "wall",
+          solid(),
+
+          area({
+            width: 40,
+            height: 40,
+          }),
+        ],
+        "-": () => [
+          "halfwall",
+          solid(),
+          area({
+            width: 30,
+            height: 40,
+          }),
+        ],
+        x: () => [
+          "door",
+          solid(),
+          sprite("door", {
+            width: 80,
+            height: 80,
+            frame: 35,
+          }),
+          area({
+            width: 80,
+            height: 40,
+          }),
+        ],
+      }
+    );
+
     const player = add([
-      sprite("dude", { frame: 0 }),
+      sprite("dude"),
       health(3),
-      scale(1),
       pos(200, 100),
       solid(),
-      area(),
+      area({
+        width: 40,
+        height: 40,
+        offset: vec2(40, 40),
+      }),
       "player",
     ]);
 
@@ -158,7 +225,7 @@ export default function Home() {
 
     onCollide("player", "enemy", async (p, e) => {
       console.log("collided");
-      await player.play("attack");
+      p.play("attack");
       e.destroy();
       const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
       console.log(bal.toString());
