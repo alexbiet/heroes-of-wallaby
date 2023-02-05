@@ -62,17 +62,20 @@ export default function Home() {
       fullscreen(!isFullscreen());
     });
 
-    loadSprite("press-play", "/assets/press-play.png", {sliceX: 2, anims: {
-      idle: {
-        from: 0,
-        to: 1,
-        loop: true,
-        pingpong: true,
-        speed: 2,
-      }
-    }});
+    loadSprite("press-play", "/assets/press-play.png", {
+      sliceX: 2,
+      anims: {
+        idle: {
+          from: 0,
+          to: 1,
+          loop: true,
+          pingpong: true,
+          speed: 2,
+        },
+      },
+    });
 
-    loadSprite("dude", "/assets/dude.png", {
+    loadSprite("hero", "/assets/hero-sprite-1.png", {
       sliceX: 5,
       anims: {
         right: {
@@ -99,18 +102,14 @@ export default function Home() {
         attack: {
           from: 4,
           to: 2,
-          speed: 5,
-          loop: true,
+          speed: 4,
         },
       },
     });
 
     loadSprite("dungeon-1", "/assets/dungeon-1.png", {});
-
-    loadSprite("clotharmor", "/assets/clotharmor.png", {
-      sliceX: 5,
-      sliceY: 9,
-    });
+    loadSprite("dungeon-2", "/assets/dungeon-2.png", {});
+    loadSprite("dungeon-3", "/assets/dungeon-3.png", {});
 
     loadSprite("square", "/assets/square.png");
 
@@ -119,7 +118,38 @@ export default function Home() {
       sliceY: 5,
     });
 
-    loadSprite("portal", "/assets/portal.png");
+    loadSpriteAtlas("/assets/enemies-atlas-bg.png", {
+      goblin: {
+        x: 0,
+        y: 0,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      wolf: {
+        x: 0,
+        y: 64,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      skeleton: {
+        x: 0,
+        y: 128,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+    });
 
     const dirs: {
       [key: string]: Vec2;
@@ -131,42 +161,115 @@ export default function Home() {
     };
     const SPEED = 300;
 
-    const dungeon = add([sprite("dungeon-1"), scale(0.79)]);
     const pressPlay = add([sprite("press-play"), scale(1)]);
     pressPlay.play("idle");
 
-    const levels = [
-      addLevel(
-        [
-          "====================",
-          "=========x==========",
-          "=========- =========",
-          "==      =- ==     ==",
-          "==      =- ==     ==",
-          "==    = =- ==     ==",
-          "==      =- ==     ==",
-          "====   ==        ===",
-          "====             ===",
-          "====      =      ===",
-          "====     ==      ===",
-          "==                ==",
-          "==                ==",
-          "==           =    ==",
-          "==        =  =    ==",
-          "==                ==",
-          "==      =- =      ==",
-          "====================",
-          "====================",
-          "====================",
-        ],
+    scene("game", (dungeonId: number) => {
+      layers(["bg", "game", "ui"], "obgamej");
 
-        {
+      function generateLevel(dungeonId: number) {
+        if (dungeonId === 0) {
+          add([sprite("dungeon-2"), scale(0.79)]);
+        }
+        if (dungeonId === 1) {
+          add([sprite("dungeon-2"), scale(0.79)]);
+        }
+        if (dungeonId === 2) {
+          add([sprite("dungeon-3"), scale(0.79)]);
+        }
+
+        const characters: any = {
+          g: {
+            sprite: "goblin",
+          },
+          w: {
+            sprite: "wolf",
+          },
+          s: {
+            sprite: "skeleton",
+          },
+        };
+
+        let dungeons = [
+          [
+            "====================",
+            "====================",
+            "====================",
+            "=== ==   ===   s   =",
+            "=== ==  ====       =",
+            "=== p    ===       =",
+            "===    ==      w   =",
+            "===    ==          =",
+            "===    ==          =",
+            "===                =",
+            "===                =",
+            "===                =",
+            "=====-           ===",
+            "=====-           ===",
+            "===                =",
+            "====               =",
+            "===                =",
+            "========-   ========",
+            "=========   ========",
+            "=========   ========",
+          ],
+          [
+            "====================",
+            "=========x==========",
+            "=========- =========",
+            "==      =- ==     ==",
+            "==  p   =- ==     ==",
+            "==    = =- ==     ==",
+            "==  g   =- ==     ==",
+            "====   ==     w  ===",
+            "====             ===",
+            "====      =      ===",
+            "====     ==      ===",
+            "==          g     ==",
+            "==    s           ==",
+            "==           =    ==",
+            "==        =  =    ==",
+            "==                ==",
+            "==      =- =      ==",
+            "====================",
+            "====================",
+            "====================",
+          ],
+          [
+            "====================",
+            "=       =          =",
+            "=                  =",
+            "=              s   =",
+            "=   p              =",
+            "=                  =",
+            "=      g       w   =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "=                  =",
+            "====================",
+          ],
+        ];
+
+        let level = dungeons[dungeonId];
+        let levelConfig = {
           width: 40,
           height: 40,
           "=": () => [
             "wall",
+            sprite("square", {
+              width: 40,
+              height: 40,
+            }),
             solid(),
-
             area({
               width: 40,
               height: 40,
@@ -193,123 +296,87 @@ export default function Home() {
               height: 40,
             }),
           ],
-        }
-      ),
-      addLevel(
-        [
-          "====================",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "=                  =",
-          "====================",
-        ],
-
-        {
-          width: 40,
-          height: 40,
-          "=": () => [
-            "wall",
+          any(ch: string) {
+            const char = characters[ch];
+            if (char) {
+              return ["enemy", sprite(char.sprite), solid(), area()];
+            }
+          },
+          p: () => [
+            "player",
+            sprite("hero"),
+            health(3),
             solid(),
-
             area({
               width: 40,
               height: 40,
+              offset: vec2(40, 40),
             }),
           ],
-          "-": () => [
-            "halfwall",
-            solid(),
-            area({
-              width: 30,
-              height: 40,
-            }),
-          ],
-          x: () => [
-            "door",
-            solid(),
-            sprite("door", {
-              width: 80,
-              height: 80,
-              frame: 35,
-            }),
-            area({
-              width: 80,
-              height: 40,
-            }),
-          ],
+        };
+
+        const gameLevel = addLevel(level, levelConfig);
+
+        const player = get("player")[0];
+
+        for (const dir in dirs) {
+          onMouseDown(() => {
+            if (pressPlay) pressPlay.destroy();
+          });
+
+          onKeyPress(dir as Key, () => {
+            if (dir === "left") {
+              player.play("right");
+              player.flipX(false);
+            } else {
+              player.play(dir);
+              player.flipX(true);
+            }
+          });
+          onKeyDown(dir as any, () => {
+            if (player.curAnim() === "attack") return;
+            player.move(dirs[dir].scale(SPEED));
+          });
+          onKeyRelease(dir as any, () => {
+            //if no other keys are pressed, stop the animation
+            player.stop();
+            dir === "left"
+              ? (player.frame = 1)
+              : dir === "right"
+              ? (player.frame = 1)
+              : dir === "up"
+              ? (player.frame = 1)
+              : (player.frame = 1);
+          });
         }
-      ),
-    ];
 
-    levels[0];
+        onCollide("player", "door", (p, d) => {
+          go("game", dungeonId + 1);
+          player.pos = vec2(200, 100);
+        });
 
-    const player = add([
-      sprite("dude"),
-      health(3),
-      pos(200, 100),
-      solid(),
-      area({
-        width: 40,
-        height: 40,
-        offset: vec2(40, 40),
-      }),
-      "player",
-    ]);
+        onCollide("player", "enemy", async (p, e) => {
+          console.log("collided");
+          e.play("attack", {
+            onEnd: () => {
+              e.destroy();
+            },
+          });
+          p.play("attack", {
+            onEnd: () => {
+              p.stop();
+            },
+          });
 
-    const enemy = add([sprite("clotharmor"), solid(), area(), pos(200, 200), "enemy"]);
+          // const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
+          // console.log(bal.toString());
+        });
+      }
 
-    for (const dir in dirs) {
-      onMouseDown( () => {
-        if(pressPlay) pressPlay.destroy();
-      })
-
-      onKeyPress(dir as Key, () => {
-        if (dir === "left") {
-          player.play("right");
-          player.flipX(false);
-        } else {
-          player.play(dir);
-          player.flipX(true);
-        }
-      });
-      onKeyDown(dir as any, () => {
-        player.move(dirs[dir].scale(SPEED));
-      });
-      onKeyRelease(dir as any, () => {
-        //if no other keys are pressed, stop the animation
-        player.stop();
-        dir === "left"
-          ? (player.frame = 1)
-          : dir === "right"
-          ? (player.frame = 1)
-          : dir === "up"
-          ? (player.frame = 1)
-          : (player.frame = 1);
-      });
-    }
-
-    onCollide("player", "enemy", async (p, e) => {
-      console.log("collided");
-      p.play("attack");
-      e.destroy();
-      const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
-      console.log(bal.toString());
+      generateLevel(dungeonId);
     });
+
+    go("game", 0);
   }, [provider]);
 
   ////////////////////////////////
@@ -330,7 +397,6 @@ export default function Home() {
     setInput(e.target.value);
     socket?.emit("input-change", e.target.value);
   };
-
 
   const [activeCanvas, setActiveCanvas] = useState(false);
 
@@ -368,10 +434,19 @@ export default function Home() {
 
         {/* TEMP */}
         <Box sx={{ float: "right", marginRight: "0" }}>
-          <RoundModal buttonColor="success" buttonText="Win" modalTitle="Round 1 Completed!" modalText="<b>.....</b>" />
-          <RoundModal buttonColor="error" buttonText="Loss" modalTitle="Round 1 Failed!" modalText="<b>.....</b>" />
+          <RoundModal
+            buttonColor="success"
+            buttonText="Win"
+            modalTitle="Round 1 Completed!"
+            modalText="<b>.....</b>"
+          />
+          <RoundModal
+            buttonColor="error"
+            buttonText="Loss"
+            modalTitle="Round 1 Failed!"
+            modalText="<b>.....</b>"
+          />
         </Box>
-
       </Stack>
 
       <Box sx={{}}>
@@ -405,13 +480,8 @@ export default function Home() {
             backgroundColor: "#111111",
           }}
         >
-          <canvas 
-            ref={canvasRef} 
-            style={{ margin: "0", padding: "0" }} 
-            />
-            
+          <canvas ref={canvasRef} style={{ margin: "0", padding: "0" }} />
         </Box>
-        
       </Box>
       <CustomConnect />
     </Stack>

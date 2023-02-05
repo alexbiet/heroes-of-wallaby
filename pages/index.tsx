@@ -38,9 +38,9 @@ export default function Landing() {
           textAlign: "center",
           paddingTop: "30px",
         }}
-      > 
+      >
         <Link href="/">
-          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} /> 
+          <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={612} height={109} />
         </Link>
       </Stack>
 
@@ -52,13 +52,12 @@ export default function Landing() {
       >
         {_isConnected ? (
           <Link href="/heroes" passHref>
-            <Button sx={{px: "100px !important",}}>Play</Button>
+            <Button sx={{ px: "100px !important" }}>Play</Button>
           </Link>
         ) : (
           <Button onClick={openConnectModal}>Connect</Button>
         )}
         <HelpModal buttonText="?" modalTitle="Help" modalText="<b>.....</b>" />
-
       </Stack>
       <CustomConnect />
     </Stack>
