@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Howl, Howler } from "howler";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(-1);
@@ -119,8 +119,8 @@ export default function Heroes() {
               href={{
                 pathname: "/difficulty",
                 query: {
-                  h: '1'
-                }
+                  h: "1",
+                },
               }}
               passHref
               onClick={() => {
@@ -198,20 +198,19 @@ export default function Heroes() {
             </CardContent>
           </Card>
 
-          
           <Link
-              href={{
-                pathname: "/difficulty",
-                query: {
-                  h: '2'
-                }
-              }}
-              passHref
-              onClick={() => {
-                playClick;
-              }}
-            >
-              <Button sx={{ width: "100%" }}>Pick</Button>
+            href={{
+              pathname: "/difficulty",
+              query: {
+                h: "2",
+              },
+            }}
+            passHref
+            onClick={() => {
+              playClick;
+            }}
+          >
+            <Button sx={{ width: "100%" }}>Pick</Button>
           </Link>
           <Button color="success" style={{ width: "100%" }} onClick={playClick}>
             Mint
@@ -271,20 +270,19 @@ export default function Heroes() {
             </CardContent>
           </Card>
 
-                    
           <Link
-              href={{
-                pathname: "/difficulty",
-                query: {
-                  h: '3'
-                }
-              }}
-              passHref
-              onClick={() => {
-                playClick;
-              }}
-            >
-              <Button sx={{ width: "100%" }}>Pick</Button>
+            href={{
+              pathname: "/difficulty",
+              query: {
+                h: "3",
+              },
+            }}
+            passHref
+            onClick={() => {
+              playClick;
+            }}
+          >
+            <Button sx={{ width: "100%" }}>Pick</Button>
           </Link>
           <Button color="success" style={{ width: "100%" }} onClick={playClick}>
             Mint

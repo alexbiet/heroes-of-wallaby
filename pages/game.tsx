@@ -329,19 +329,19 @@ export default function Home() {
           ],
           [
             "====================",
-            "=       =          =",
-            "=       =          =",
-            "=              s   =",
-            "=   p              =",
-            "=                  =",
-            "=      g       w   =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
+            "=========x =       =",
+            "=========  =       =",
+            "===     =- =   s   =",
+            "=== p   =- =       =",
+            "===     =- =       =",
+            "===     =- =   w   =",
+            "=== =   =- =       =",
+            "===   - =- =       =",
+            "=======            =",
+            "======             =",
+            "=   ==             =",
+            "=   ==             =",
+            "=   ==             =",
             "=                  =",
             "=                  =",
             "=                  =",
@@ -358,6 +358,10 @@ export default function Home() {
           height: 40,
           "=": () => [
             "wall",
+            sprite("square", {
+              width: 40,
+              height: 40,
+            }),
             solid(),
             area({
               width: 40,
@@ -490,7 +494,7 @@ export default function Home() {
       generateLevel(dungeonId);
     });
 
-    go("game", 0, 3);
+    go("game", 2, 3);
   }, [provider, router, selectedHero]);
 
   ////////////////////////////////

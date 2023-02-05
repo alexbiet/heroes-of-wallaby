@@ -8,7 +8,6 @@ import { theme } from "../styles/theme";
 import "@rainbow-me/rainbowkit/styles.css";
 import "../styles/globals.scss";
 
-
 const hyperspace: Chain = {
   id: 3_141,
   name: "Hyperspace",

@@ -30,7 +30,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-howler": "^5.2.0",
-    "sass": "^1.57.1",
+    "sass": "^1.58.0",
     "socket.io": "^4.5.4",
     "socket.io-client": "^4.5.4",
     "typescript": "4.9.4",
