@@ -12,7 +12,6 @@ import { useProvider } from "wagmi";
 import RoundModal from "@/components/RoundModal";
 import { Howl, Howler } from "howler";
 import { useRouter } from "next/router";
-import "../styles/globals.scss";
 
 export default function Home() {
   const canvasRef = useRef(null);

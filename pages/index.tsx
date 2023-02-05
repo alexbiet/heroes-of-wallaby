@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useAccount, useConnect } from "wagmi";
 import { Howl, Howler } from "howler";
-import "../styles/globals.scss";
 
 export default function Landing() {
   const account = useAccount();

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { Howl, Howler } from "howler";
 import { useRouter } from 'next/router';
-import "../styles/globals.scss";
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(-1);

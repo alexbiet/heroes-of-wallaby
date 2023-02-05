@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { theme } from "../styles/theme";
 import {Howl, Howler} from 'howler';
 import { useRouter } from 'next/router';
-import "../styles/globals.scss";
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(1);
