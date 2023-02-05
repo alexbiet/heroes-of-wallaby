@@ -158,6 +158,39 @@ export default function Home() {
       sliceY: 5,
     });
 
+    loadSpriteAtlas("/assets/items-atlas.png", {
+      key: {
+        x: 0,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      coin: {
+        x: 64,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      heartFull: {
+        x: 128,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      heartEmpty: {
+        x: 192,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      trophy: {
+        x: 256,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+    });
+
     loadSpriteAtlas("/assets/enemies-atlas-bg.png", {
       goblin: {
         x: 0,
@@ -308,6 +341,7 @@ export default function Home() {
         ];
 
         let level = dungeons[dungeonId];
+
         let levelConfig = {
           width: 40,
           height: 40,
@@ -361,11 +395,26 @@ export default function Home() {
 
         const gameLevel = addLevel(level, levelConfig);
 
-        
         const pressPlay = add([sprite("press-play"), scale(1)]);
         pressPlay.play("idle");
 
         const player = get("player")[0];
+
+        const hearts = [];
+
+        function drawHearts() {
+          for (let i = 0; i < player.hp(); i++) {
+            hearts.push(add([sprite("heartFull"), pos(30 + i * 64, 30), "heartFull"]));
+          }
+        }
+        drawHearts();
+
+        player.onHurt(() => {
+          hearts.pop().destroy();
+          if (player.hp() === 0) {
+            go("gameover");
+          }
+        });
 
         for (const dir in dirs) {
           onMouseDown(() => {
@@ -410,6 +459,7 @@ export default function Home() {
           fight_1.play();
           e.play("attack", {
             onEnd: () => {
+              player.hurt(1);
               e.destroy();
             },
           });
