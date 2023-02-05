@@ -18,9 +18,9 @@ export const theme = createTheme({
   components: {
     MuiButton: {
       defaultProps: {
-        className: "pixel-borders pixel-borders--2",
-        variant: "contained",
-        disableRipple: true,
+        // className: "pixel-borders pixel-borders--2",
+        // variant: "contained",
+        // disableRipple: true,
       },
       variants: [
         {
