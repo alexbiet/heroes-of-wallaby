@@ -3,21 +3,11 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import { ThemeProvider } from "@mui/system";
+// import { ThemeProvider } from "@mui/system";
 import { theme } from "../styles/theme";
 import "@rainbow-me/rainbowkit/styles.css";
 import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
-import "../styles/globals.scss";
+
 
 const hyperspace: Chain = {
   id: 3_141,
