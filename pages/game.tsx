@@ -212,9 +212,6 @@ export default function Home() {
     };
     const SPEED = 300;
 
-    const pressPlay = add([sprite("press-play"), scale(1)]);
-    pressPlay.play("idle");
-
     scene("game", (dungeonId: number) => {
       layers(["bg", "game", "ui"], "obgamej");
 
@@ -363,6 +360,10 @@ export default function Home() {
         };
 
         const gameLevel = addLevel(level, levelConfig);
+
+        
+        const pressPlay = add([sprite("press-play"), scale(1)]);
+        pressPlay.play("idle");
 
         const player = get("player")[0];
 
