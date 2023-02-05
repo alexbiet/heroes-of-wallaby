@@ -2,12 +2,14 @@ import { CustomConnect } from "@/components/CustomConnect";
 import { Box, Card, CardContent, CardMedia, Stack, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { theme } from "../styles/theme";
 import {Howl, Howler} from 'howler';
+import { useRouter } from 'next/router';
 
 export default function Heroes() {
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(1);
+  const router = useRouter();
 
   const click = new Howl({
     src: ['/sfx/button_click.flac'],
@@ -18,6 +20,12 @@ export default function Heroes() {
   function playClick() {
     click.play();
   }
+
+  useEffect(()=>{
+    if(router)
+    console.log(router.query.h);
+
+  },[router])
 
   return (
     <Stack
@@ -55,8 +63,8 @@ export default function Heroes() {
         }}>
 
         <Card
-          onClick={() => { setSelected(0); playClick }}
-          className={selected === 0 ? "pixel-box--primary-custom" : "pixel-borders--2"}
+          onClick={() => { setSelected(1); playClick }}
+          className={selected === 1 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -89,8 +97,8 @@ export default function Heroes() {
             </small>
         </Card>
         <Card
-          onClick={() => { setSelected(1); playClick }}
-          className={selected === 1 ? "pixel-box--primary-custom" : "pixel-borders--2"}
+          onClick={() => { setSelected(2); playClick }}
+          className={selected === 2 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -124,8 +132,8 @@ export default function Heroes() {
         </Card>
 
         <Card
-          onClick={() => { setSelected(2); playClick }}
-          className={selected === 2 ? "pixel-box--primary-custom" : "pixel-borders--2"}
+          onClick={() => { setSelected(3); playClick }}
+          className={selected === 3 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -159,7 +167,15 @@ export default function Heroes() {
 
       </Box>
 
-        <Link href="/game" onClick={ playClick }>
+        <Link 
+          href={{
+            pathname: "/game",
+            query: {
+              h: router.query.h,
+              d: selected,
+            }
+          }} 
+          onClick={ playClick }>
             <Button sx={{px: "100px !important", display: "block"}}>Start Game</Button>
         </Link>
 
