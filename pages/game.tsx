@@ -11,7 +11,7 @@ import { ethers } from "ethers";
 import { useProvider } from "wagmi";
 import RoundModal from "@/components/RoundModal";
 import { Howl, Howler } from "howler";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -20,7 +20,6 @@ export default function Home() {
   const provider = useProvider();
   const router = useRouter();
   const [selectedHero, setSelectedHero] = useState<string>("");
-
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
@@ -68,13 +67,12 @@ export default function Home() {
     };
     // socketInitializer();
 
-    if(router.query.h) {
+    if (router.query.h) {
       // console.log(router.query.h);
       // console.log(router.query.d);
-      setSelectedHero("/assets/hero-sprite-" + router.query.h + ".png")
-
+      setSelectedHero("/assets/hero-sprite-" + router.query.h + ".png");
     } else {
-      setSelectedHero("/assets/hero-sprite-1.png")
+      setSelectedHero("/assets/hero-sprite-1.png");
     }
 
     const k = kaboom({
@@ -169,6 +167,39 @@ export default function Home() {
     loadSprite("door", "/assets/door.png", {
       sliceX: 8,
       sliceY: 5,
+    });
+
+    loadSpriteAtlas("/assets/items-atlas.png", {
+      key: {
+        x: 0,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      coin: {
+        x: 64,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      heartFull: {
+        x: 128,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      heartEmpty: {
+        x: 192,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
+      trophy: {
+        x: 256,
+        y: 0,
+        width: 64,
+        height: 64,
+      },
     });
 
     loadSpriteAtlas("/assets/enemies-atlas-bg.png", {
@@ -321,6 +352,7 @@ export default function Home() {
         ];
 
         let level = dungeons[dungeonId];
+
         let levelConfig = {
           width: 40,
           height: 40,
@@ -374,11 +406,30 @@ export default function Home() {
 
         const gameLevel = addLevel(level, levelConfig);
 
-        
         const pressPlay = add([sprite("press-play"), scale(1)]);
         pressPlay.play("idle");
 
         const player = get("player")[0];
+
+        const hearts = [];
+        const emptyHearts = [];
+        for (let i = 0; i < player.hp(); i++) {
+          emptyHearts.push(add([sprite("heartEmpty"), pos(30 + i * 64, 30), "heartEmpty"]));
+        }
+
+        function drawHearts() {
+          for (let i = 0; i < player.hp(); i++) {
+            hearts.push(add([sprite("heartFull"), pos(30 + i * 64, 30), "heartFull"]));
+          }
+        }
+        drawHearts();
+
+        player.onHurt(() => {
+          hearts.pop().destroy();
+          if (player.hp() === 0) {
+            go("gameover");
+          }
+        });
 
         for (const dir in dirs) {
           onMouseDown(() => {
@@ -423,6 +474,7 @@ export default function Home() {
           fight_1.play();
           e.play("attack", {
             onEnd: () => {
+              player.hurt(1);
               e.destroy();
             },
           });
@@ -441,7 +493,7 @@ export default function Home() {
     });
 
     go("game", 0);
-  }, [provider, router]);
+  }, [provider, router, selectedHero]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
