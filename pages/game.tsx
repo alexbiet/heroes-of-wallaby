@@ -19,14 +19,8 @@ export default function Home() {
   const [input, setInput] = useState<string>("");
   const provider = useProvider();
   const router = useRouter();
+  const [selectedHero, setSelectedHero] = useState<string>("");
 
-  useEffect(()=>{
-    if(router) {
-    console.log(router.query.h);
-    console.log(router.query.d);
-  }
-
-  },[router])
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
@@ -73,6 +67,15 @@ export default function Home() {
       setSocket(io("", { query: { name: "John Smith" } }));
     };
     // socketInitializer();
+
+    if(router.query.h) {
+      // console.log(router.query.h);
+      // console.log(router.query.d);
+      setSelectedHero("/assets/hero-sprite-" + router.query.h + ".png")
+
+    } else {
+      setSelectedHero("/assets/hero-sprite-1.png")
+    }
 
     const k = kaboom({
       canvas: canvasRef.current || undefined,
@@ -125,7 +128,7 @@ export default function Home() {
       },
     });
 
-    loadSprite("hero", "/assets/hero-sprite-1.png", {
+    loadSprite("hero", selectedHero, {
       sliceX: 5,
       anims: {
         right: {
@@ -438,7 +441,7 @@ export default function Home() {
     });
 
     go("game", 0);
-  }, [provider]);
+  }, [provider, router]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
