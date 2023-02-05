@@ -26,16 +26,6 @@ export default function Home() {
     volume: 1.5,
   });
 
-  const fight_2 = new Howl({
-    src: ["/sfx/fight/big_punch.wav"],
-    volume: 1,
-  });
-
-  const fight_3 = new Howl({
-    src: ["/sfx/fight/fire_attack.wav"],
-    volume: 0.5,
-  });
-
   const pickItem = new Howl({
     src: ["/sfx/pick_item.wav"],
     volume: 1,
@@ -246,6 +236,16 @@ export default function Home() {
       volume: 1,
     });
 
+    const fight_2 = new Howl({
+      src: ["/sfx/fight/big_punch.wav"],
+      volume: 1,
+    });
+  
+    const fight_3 = new Howl({
+      src: ["/sfx/fight/fire_attack.wav"],
+      volume: 0.5,
+    });
+
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -329,7 +329,7 @@ export default function Home() {
           ],
           [
             "====================",
-            "=========x =       =",
+            "=========x =========",
             "=========  =       =",
             "===     =- =   s   =",
             "=== p   =- =       =",
@@ -337,16 +337,16 @@ export default function Home() {
             "===     =- =   w   =",
             "=== =   =- =       =",
             "===   - =- =       =",
-            "=======            =",
+            "=======       ======",
             "======             =",
             "=   ==             =",
             "=   ==             =",
-            "=   ==             =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
-            "=                  =",
+            "======             =",
+            "=     =======      =",
+            "=           =  ==  =",
+            "=           =  ==  =",
+            "=           =      =",
+            "=           =      =",
             "====================",
           ],
         ];
@@ -473,7 +473,17 @@ export default function Home() {
 
         onCollide("player", "enemy", async (p, e) => {
           console.log("collided");
-          fight_1.play();
+
+          if(router.query.h) {
+            if(router.query.h == "1") {
+              fight_1.play();
+            } else if (router.query.h == "2") {
+              fight_2.play();
+            } else {
+              fight_3.play();
+            }
+          }
+          
           e.play("attack", {
             onEnd: () => {
               player.hurt(1);
@@ -494,7 +504,7 @@ export default function Home() {
       generateLevel(dungeonId);
     });
 
-    go("game", 2, 3);
+    go("game", 0, 3);
   }, [provider, router, selectedHero]);
 
   ////////////////////////////////
