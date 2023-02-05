@@ -11,7 +11,7 @@ import { ethers } from "ethers";
 import { useProvider } from "wagmi";
 import RoundModal from "@/components/RoundModal";
 import { Howl, Howler } from "howler";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -20,7 +20,6 @@ export default function Home() {
   const provider = useProvider();
   const router = useRouter();
   const [selectedHero, setSelectedHero] = useState<string>("");
-
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
@@ -68,13 +67,12 @@ export default function Home() {
     };
     // socketInitializer();
 
-    if(router.query.h) {
+    if (router.query.h) {
       // console.log(router.query.h);
       // console.log(router.query.d);
-      setSelectedHero("/assets/hero-sprite-" + router.query.h + ".png")
-
+      setSelectedHero("/assets/hero-sprite-" + router.query.h + ".png");
     } else {
-      setSelectedHero("/assets/hero-sprite-1.png")
+      setSelectedHero("/assets/hero-sprite-1.png");
     }
 
     const k = kaboom({
@@ -491,7 +489,7 @@ export default function Home() {
     });
 
     go("game", 0);
-  }, [provider, router]);
+  }, [provider, router, selectedHero]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
