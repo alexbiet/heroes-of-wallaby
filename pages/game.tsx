@@ -415,7 +415,7 @@ export default function Home() {
         for (let i = 0; i < 3; i++) {
           emptyHearts.push(add([sprite("heartEmpty"), pos(30 + i * 64, 30), "heartEmpty"]));
         }
-        const hearts = [];
+        const hearts: any = [];
         for (let i = 0; i < player.hp(); i++) {
           hearts.push(add([sprite("heartFull"), pos(30 + i * 64, 30), "heartFull"]));
         }
