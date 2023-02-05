@@ -5,8 +5,19 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { ThemeProvider } from "@mui/system";
 import { theme } from "../styles/theme";
-import "../styles/globals.scss";
 import "@rainbow-me/rainbowkit/styles.css";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
+import "../styles/globals.scss";
 
 const hyperspace: Chain = {
   id: 3_141,
