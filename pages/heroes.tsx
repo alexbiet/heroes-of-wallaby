@@ -57,7 +57,6 @@ export default function Heroes() {
       >
         <Stack sx={{}}>
           <Card
-            className="pixel-borders--2"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -147,7 +146,6 @@ export default function Heroes() {
 
         <Stack sx={{}}>
           <Card
-            className="pixel-borders--2"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -219,7 +217,6 @@ export default function Heroes() {
 
         <Stack>
           <Card
-            className="pixel-borders--2"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
