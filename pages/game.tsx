@@ -390,6 +390,7 @@ export default function Home() {
             player.move(dirs[dir].scale(SPEED));
           });
           onKeyRelease(dir as any, () => {
+            walk.stop();
             //if no other keys are pressed, stop the animation
             player.stop();
             dir === "left"
@@ -409,6 +410,7 @@ export default function Home() {
 
         onCollide("player", "enemy", async (p, e) => {
           console.log("collided");
+          fight_1.play();
           e.play("attack", {
             onEnd: () => {
               e.destroy();
@@ -429,7 +431,7 @@ export default function Home() {
     });
 
     go("game", 0);
-  }, [provider]);
+  }, [fight_1, provider, walk]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
