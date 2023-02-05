@@ -406,8 +406,14 @@ export default function Home() {
 
         const gameLevel = addLevel(level, levelConfig);
 
-        const pressPlay = add([sprite("press-play"), scale(1)]);
-        pressPlay.play("idle");
+        if (dungeonId === 0) {
+          const pressPlay = add([sprite("press-play"), scale(1), area(), "pressPlay"]);
+          pressPlay.play("idle");
+
+          onClick("pressPlay", (pressPlay) => {
+            pressPlay.destroy();
+          });
+        }
 
         const player = get("player")[0];
 
@@ -428,10 +434,6 @@ export default function Home() {
         });
 
         for (const dir in dirs) {
-          onMouseDown(() => {
-            if (pressPlay) pressPlay.destroy();
-          });
-
           onKeyPress(dir as Key, () => {
             walk.play();
             if (dir === "left") {
