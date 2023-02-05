@@ -412,6 +412,10 @@ export default function Home() {
         const player = get("player")[0];
 
         const hearts = [];
+        const emptyHearts = [];
+        for (let i = 0; i < player.hp(); i++) {
+          emptyHearts.push(add([sprite("heartEmpty"), pos(30 + i * 64, 30), "heartEmpty"]));
+        }
 
         function drawHearts() {
           for (let i = 0; i < player.hp(); i++) {
