@@ -4,9 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { theme } from "../styles/theme";
+import {Howl, Howler} from 'howler';
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(0);
+
+  const click = new Howl({
+    src: ['/sfx/button_click.flac'],
+    volume: 1.5,
+  });
+  click.play();
+  
+  function playClick() {
+    click.play();
+  }
 
   return (
     <Stack
@@ -44,7 +55,7 @@ export default function Heroes() {
         }}>
 
         <Card
-          onClick={() => setSelected(0)}
+          onClick={() => { setSelected(0); playClick }}
           className={selected === 0 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
@@ -78,7 +89,7 @@ export default function Heroes() {
             </small>
         </Card>
         <Card
-          onClick={() => setSelected(1)}
+          onClick={() => { setSelected(1); playClick }}
           className={selected === 1 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
@@ -113,7 +124,7 @@ export default function Heroes() {
         </Card>
 
         <Card
-          onClick={() => setSelected(2)}
+          onClick={() => { setSelected(2); playClick }}
           className={selected === 2 ? "pixel-box--primary-custom" : "pixel-borders--2"}
           sx={{
             padding: "0 !important",
@@ -148,7 +159,7 @@ export default function Heroes() {
 
       </Box>
 
-        <Link href="/game">
+        <Link href="/game" onClick={ playClick }>
             <Button sx={{px: "100px !important", display: "block"}}>Start Game</Button>
         </Link>
 

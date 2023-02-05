@@ -3,9 +3,19 @@ import { Box, Card, CardContent, CardMedia, Stack, Typography, Button } from "@m
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import {Howl, Howler} from 'howler';
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(-1);
+
+  const click = new Howl({
+    src: ['/sfx/button_click.flac'],
+    volume: 1.5,
+  });
+  
+  function playClick() {
+    click.play();
+  }
 
   return (
     <Stack
@@ -95,11 +105,11 @@ export default function Heroes() {
             }}
           >
 
-            <Link href="/difficulty" passHref>
+            <Link href="/difficulty" passHref onClick={()=> { playClick }}>
               <Button sx={{width: "100%"}}>Pick</Button>
             </Link>
 
-            <Link href="#" passHref style={{width: "100%", textAlign: "center", marginTop: "-20px"}}>
+            <Link href="#" passHref style={{width: "100%", textAlign: "center", marginTop: "-20px"}} onClick={()=> { playClick }}>
               <Button color="error" sx={{padding: "10px 20px 10px 20px !important",}}>Burn</Button>
             </Link>
             
@@ -149,7 +159,7 @@ export default function Heroes() {
             </small>
             </CardContent>
           </Card>
-          <Button color="success" style={{width: "100%"}}>Mint</Button>
+          <Button color="success" style={{width: "100%"}} onClick={ playClick }>Mint</Button>
         </Stack>
 
         <Stack>
@@ -194,7 +204,7 @@ export default function Heroes() {
                 </small>
             </CardContent>
           </Card>
-          <Button color="success" style={{width: "100%"}}>Mint</Button>
+          <Button color="success" style={{width: "100%"}} onClick={ playClick }>Mint</Button>
         </Stack>
       </Box>
 

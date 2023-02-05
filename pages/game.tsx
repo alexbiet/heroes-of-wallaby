@@ -10,12 +10,67 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import { useProvider } from "wagmi";
 import RoundModal from "@/components/RoundModal";
+import {Howl, Howler} from 'howler';
 
 export default function Home() {
   const canvasRef = useRef(null);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [input, setInput] = useState<string>("");
   const provider = useProvider();
+
+  const click = new Howl({
+    src: ['/sfx/button_click.flac'],
+    volume: 1.5,
+  });
+
+  const walk = new Howl({
+    src: ['/sfx/footsteps/step_cloth_1.ogg'],
+    volume: 1,  
+    loop: true,
+  });
+
+  const fight_1 = new Howl({
+    src: ['/sfx/fight/new_hits_1.wav'],
+    volume: 1,
+  });
+
+  const fight_2 = new Howl({
+    src: ['/sfx/fight/big_punch.wav'],
+    volume: 1,
+  });
+
+  const fight_3 = new Howl({
+    src: ['/sfx/fight/fire_attack.wav'],
+    volume: 0.5,
+  });
+
+  const pickItem = new Howl({
+    src: ['/sfx/pick_item.wav'],
+    volume: 1,
+  });
+
+  const win = new Howl({
+    src: ['/sfx/win.aif'],
+    volume: 1,
+  });
+
+  const loss = new Howl({
+    src: ['/sfx/loss.aif'],
+    volume: 1,
+  });
+
+  const door = new Howl({
+    src: ['/sfx/door_1.wav'],
+    volume: 1,
+  });
+
+  function playClick() {
+    click.play();
+  }
+
+
+
+
 
   useEffect(() => {
     const socketInitializer = async () => {
@@ -62,17 +117,19 @@ export default function Home() {
       fullscreen(!isFullscreen());
     });
 
-    loadSprite("press-play", "/assets/press-play.png", {sliceX: 2, anims: {
-      idle: {
-        from: 0,
-        to: 1,
-        loop: true,
-        pingpong: true,
-        speed: 2,
-      }
-    }});
+    loadSprite("press-play", "/assets/press-play.png", {
+      sliceX: 2, 
+      anims: {
+        idle: {
+          from: 0,
+          to: 1,
+          loop: true,
+          pingpong: true,
+          speed: 2,
+        }
+      }});
 
-    loadSprite("dude", "/assets/dude.png", {
+    loadSprite("dude", "/assets/hero-sprite-1.png", {
       sliceX: 5,
       anims: {
         right: {
@@ -119,7 +176,29 @@ export default function Home() {
       sliceY: 5,
     });
 
-    loadSprite("portal", "/assets/portal.png");
+    loadSprite("game-items", "/assets/game-items.png", {
+      sliceX: 5,
+      sliceY: 1,
+    });
+
+    loadSprite("enemies", "/assets/enemies-sprite.png", {
+      sliceX: 3,
+      sliceY: 27,
+      anims: {
+        idle: {
+          from: 0,
+          to: 0,
+        },
+        attack: {
+          from: 1,
+          to: 2,
+          loop: true,
+          pingpong: true,
+          speed: 4,
+        },
+      }
+    });
+
 
     const dirs: {
       [key: string]: Vec2;
@@ -279,6 +358,7 @@ export default function Home() {
       })
 
       onKeyPress(dir as Key, () => {
+        walk.play();
         if (dir === "left") {
           player.play("right");
           player.flipX(false);
@@ -289,10 +369,12 @@ export default function Home() {
       });
       onKeyDown(dir as any, () => {
         player.move(dirs[dir].scale(SPEED));
+        
       });
       onKeyRelease(dir as any, () => {
         //if no other keys are pressed, stop the animation
         player.stop();
+        walk.stop();
         dir === "left"
           ? (player.frame = 1)
           : dir === "right"
@@ -306,6 +388,9 @@ export default function Home() {
     onCollide("player", "enemy", async (p, e) => {
       console.log("collided");
       p.play("attack");
+      fight_1.play();
+      // fight_2.play();
+      // fight_3.play();
       e.destroy();
       const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
       console.log(bal.toString());
@@ -362,14 +447,14 @@ export default function Home() {
           <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} />
         </Link>
 
-        <Link href="/heroes">
+        <Link href="/heroes" onClick={ playClick }>
           <Button style={{ float: "right", marginTop: "-60px" }}>MENU</Button>
         </Link>
 
         {/* TEMP */}
         <Box sx={{ float: "right", marginRight: "0" }}>
-          <RoundModal buttonColor="success" buttonText="Win" modalTitle="Round 1 Completed!" modalText="<b>.....</b>" />
-          <RoundModal buttonColor="error" buttonText="Loss" modalTitle="Round 1 Failed!" modalText="<b>.....</b>" />
+          <RoundModal buttonColor="success" buttonText="Win" modalTitle="Round 1 Completed!" modalText="<b>.....</b>" playClick={ playClick } />
+          <RoundModal buttonColor="error" buttonText="Loss" modalTitle="Round 1 Failed!" modalText="<b>.....</b>" playClick={ playClick } />
         </Box>
 
       </Stack>

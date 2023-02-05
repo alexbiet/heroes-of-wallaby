@@ -5,6 +5,7 @@ type modalProps = {
   buttonText : string;
   modalTitle : string;
   modalText : string;
+  playClick: Function;
 }
 
 function HelpModal(props: modalProps) {
@@ -13,13 +14,21 @@ function HelpModal(props: modalProps) {
     buttonText,
     modalTitle,
     modalText,
+    playClick,
   } = props;
 
   const [modalStatus, setModalStatus] = useState(false);
 
   return (
     <>
-    <Button onClick={()=> setModalStatus(!modalStatus) }>{buttonText}</Button>
+    <Button 
+      onClick={()=> {
+        setModalStatus(!modalStatus); 
+        playClick();
+        } } 
+      sx={{
+        fontSize: "20px",
+      }}>{buttonText}</Button>
 
     <Stack className="pixel-borders--2" sx={{ 
         display: modalStatus ? "block" : "none",
@@ -28,6 +37,7 @@ function HelpModal(props: modalProps) {
         right: "0",
         top: "0",
         bottom: "0",
+        zIndex: "999",
         margin: "auto",
         width: "800px",
         height: "500px",
@@ -36,7 +46,7 @@ function HelpModal(props: modalProps) {
         background: "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
       }}>
       
-      <Icon className="nes-icon close" onClick={()=> setModalStatus(!modalStatus) } sx={{
+      <Icon className="nes-icon close" onClick={()=> {setModalStatus(!modalStatus); playClick() }} sx={{
         float: "right",
       }}></Icon>
 
