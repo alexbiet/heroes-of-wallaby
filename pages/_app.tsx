@@ -6,6 +6,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { ThemeProvider } from "@mui/system";
 import { theme } from "../styles/theme";
 import "@rainbow-me/rainbowkit/styles.css";
+import "../styles/globals.scss";
 
 
 const hyperspace: Chain = {

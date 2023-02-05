@@ -87,7 +87,7 @@ export default function Landing() {
       >
         {_isConnected ? (
           <Link href="/heroes" passHref>
-            <Button sx={{ px: "100px !important" }} onClick={playClick}>
+            <Button className="pixel-borders--2" sx={{ px: "100px !important" }} onClick={playClick}>
               Play
             </Button>
           </Link>
