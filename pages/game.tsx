@@ -256,7 +256,7 @@ export default function Home() {
     };
     const SPEED = 300;
 
-    scene("game", (dungeonId: number) => {
+    scene("game", (dungeonId: number, playerHealth: number) => {
       layers(["bg", "game", "ui"], "obgamej");
 
       function generateLevel(dungeonId: number) {
@@ -394,7 +394,7 @@ export default function Home() {
           p: () => [
             "player",
             sprite("hero"),
-            health(3),
+            health(playerHealth),
             solid(),
             area({
               width: 40,
@@ -411,18 +411,14 @@ export default function Home() {
 
         const player = get("player")[0];
 
-        const hearts = [];
         const emptyHearts = [];
-        for (let i = 0; i < player.hp(); i++) {
+        for (let i = 0; i < 3; i++) {
           emptyHearts.push(add([sprite("heartEmpty"), pos(30 + i * 64, 30), "heartEmpty"]));
         }
-
-        function drawHearts() {
-          for (let i = 0; i < player.hp(); i++) {
-            hearts.push(add([sprite("heartFull"), pos(30 + i * 64, 30), "heartFull"]));
-          }
+        const hearts = [];
+        for (let i = 0; i < player.hp(); i++) {
+          hearts.push(add([sprite("heartFull"), pos(30 + i * 64, 30), "heartFull"]));
         }
-        drawHearts();
 
         player.onHurt(() => {
           hearts.pop().destroy();
@@ -465,7 +461,7 @@ export default function Home() {
         }
 
         onCollide("player", "door", (p, d) => {
-          go("game", dungeonId + 1);
+          go("game", dungeonId + 1, player.hp());
           player.pos = vec2(200, 100);
         });
 
@@ -492,7 +488,7 @@ export default function Home() {
       generateLevel(dungeonId);
     });
 
-    go("game", 0);
+    go("game", 0, 3);
   }, [provider, router, selectedHero]);
 
   ////////////////////////////////
