@@ -107,11 +107,11 @@ export const theme = createTheme({
         style: {
           color: "#000",
           background: "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
-          borderRadius: "20px";
-          borderStyle: "solid";
-          borderWidth: "4px";
-          borderColor: "#000";
-          borderImageSlice: "4";
+          borderRadius: "20px",
+          borderStyle: "solid",
+          borderWidth: "4px",
+          borderColor: "#000",
+          borderImageSlice: "4",
           borderImageWidth: "2",
           borderImageOutset: "0",
           borderImageSource: 'url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\'><path d=\'M2 2h2v2H2zM4 0h2v2H4zM10 4h2v2h-2zM0 4h2v2H0zM6 0h2v2H6zM8 2h2v2H8zM8 8h2v2H8zM6 10h2v2H6zM0 6h2v2H0zM10 6h2v2h-2zM4 10h2v2H4zM2 8h2v2H2z\' fill=\'%23000\' /></svg>")',
