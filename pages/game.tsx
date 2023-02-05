@@ -11,12 +11,22 @@ import { ethers } from "ethers";
 import { useProvider } from "wagmi";
 import RoundModal from "@/components/RoundModal";
 import { Howl, Howler } from "howler";
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const canvasRef = useRef(null);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [input, setInput] = useState<string>("");
   const provider = useProvider();
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(router) {
+    console.log(router.query.h);
+    console.log(router.query.d);
+  }
+
+  },[router])
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],

@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Howl, Howler } from "howler";
+import { useRouter } from 'next/router';
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(-1);
+  const router = useRouter();
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
@@ -114,7 +116,12 @@ export default function Heroes() {
             }}
           >
             <Link
-              href="/difficulty"
+              href={{
+                pathname: "/difficulty",
+                query: {
+                  h: '1'
+                }
+              }}
               passHref
               onClick={() => {
                 playClick;
@@ -190,6 +197,22 @@ export default function Heroes() {
               </small>
             </CardContent>
           </Card>
+
+          
+          <Link
+              href={{
+                pathname: "/difficulty",
+                query: {
+                  h: '2'
+                }
+              }}
+              passHref
+              onClick={() => {
+                playClick;
+              }}
+            >
+              <Button sx={{ width: "100%" }}>Pick</Button>
+          </Link>
           <Button color="success" style={{ width: "100%" }} onClick={playClick}>
             Mint
           </Button>
@@ -247,6 +270,22 @@ export default function Heroes() {
               </small>
             </CardContent>
           </Card>
+
+                    
+          <Link
+              href={{
+                pathname: "/difficulty",
+                query: {
+                  h: '3'
+                }
+              }}
+              passHref
+              onClick={() => {
+                playClick;
+              }}
+            >
+              <Button sx={{ width: "100%" }}>Pick</Button>
+          </Link>
           <Button color="success" style={{ width: "100%" }} onClick={playClick}>
             Mint
           </Button>
