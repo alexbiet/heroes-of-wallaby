@@ -10,12 +10,63 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import { useProvider } from "wagmi";
 import RoundModal from "@/components/RoundModal";
+import { Howl, Howler } from "howler";
 
 export default function Home() {
   const canvasRef = useRef(null);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [input, setInput] = useState<string>("");
   const provider = useProvider();
+
+  const click = new Howl({
+    src: ["/sfx/button_click.flac"],
+    volume: 1.5,
+  });
+
+  const walk = new Howl({
+    src: ["/sfx/footsteps/step_cloth_1.ogg"],
+    volume: 1,
+    loop: true,
+  });
+
+  const fight_1 = new Howl({
+    src: ["/sfx/fight/new_hits_1.wav"],
+    volume: 1,
+  });
+
+  const fight_2 = new Howl({
+    src: ["/sfx/fight/big_punch.wav"],
+    volume: 1,
+  });
+
+  const fight_3 = new Howl({
+    src: ["/sfx/fight/fire_attack.wav"],
+    volume: 0.5,
+  });
+
+  const pickItem = new Howl({
+    src: ["/sfx/pick_item.wav"],
+    volume: 1,
+  });
+
+  const win = new Howl({
+    src: ["/sfx/win.aif"],
+    volume: 1,
+  });
+
+  const loss = new Howl({
+    src: ["/sfx/loss.aif"],
+    volume: 1,
+  });
+
+  const door = new Howl({
+    src: ["/sfx/door_1.wav"],
+    volume: 1,
+  });
+
+  function playClick() {
+    click.play();
+  }
 
   useEffect(() => {
     const socketInitializer = async () => {
@@ -325,6 +376,7 @@ export default function Home() {
           });
 
           onKeyPress(dir as Key, () => {
+            walk.play();
             if (dir === "left") {
               player.play("right");
               player.flipX(false);
@@ -428,7 +480,7 @@ export default function Home() {
           <Image src="/logo.png" alt="HoW :: The Dungeon of Souls" width={359} height={64} />
         </Link>
 
-        <Link href="/heroes">
+        <Link href="/heroes" onClick={playClick}>
           <Button style={{ float: "right", marginTop: "-60px" }}>MENU</Button>
         </Link>
 
@@ -439,12 +491,14 @@ export default function Home() {
             buttonText="Win"
             modalTitle="Round 1 Completed!"
             modalText="<b>.....</b>"
+            playClick={playClick}
           />
           <RoundModal
             buttonColor="error"
             buttonText="Loss"
             modalTitle="Round 1 Failed!"
             modalText="<b>.....</b>"
+            playClick={playClick}
           />
         </Box>
       </Stack>

@@ -7,6 +7,7 @@ type modalProps = {
   modalTitle : string;
   modalText : string;
   buttonColor : string;
+  playClick : Function;
 }
 
 function RoundModal(props: modalProps) {
@@ -16,13 +17,14 @@ function RoundModal(props: modalProps) {
     modalTitle,
     modalText,
     buttonColor,
+    playClick,
   } = props;
 
   const [modalStatus, setModalStatus] = useState(false);
 
   return (
     <>
-    <Button onClick={()=> setModalStatus(!modalStatus) } sx={{padding: "10px 20px 10px 20px !important", float: "right", marginBottom: "-50px"}} color={buttonColor == "success" ? "success" : "error"}>{buttonText}</Button>
+    <Button onClick={()=> { setModalStatus(!modalStatus); playClick() } } sx={{padding: "10px 20px 10px 20px !important", float: "right", marginBottom: "-50px"}} color={buttonColor == "success" ? "success" : "error"}>{buttonText}</Button>
 
     <Stack className="pixel-borders--2" sx={{ 
         display: modalStatus ? "block" : "none",
@@ -59,18 +61,18 @@ function RoundModal(props: modalProps) {
 
         <Link href="/heroes" passHref>
         <Button 
-          onClick={()=> setModalStatus(!modalStatus) } 
+          onClick={()=> { setModalStatus(!modalStatus); playClick() } } 
           sx={{padding: "10px 20px 10px 20px !important"}}>Go To Menu</Button>
         </Link>
 
         {(buttonColor=="success") ? (
           <Button 
-            onClick={()=> setModalStatus(!modalStatus) } 
+            onClick={()=> { setModalStatus(!modalStatus); playClick() }  } 
             color="secondary"
             sx={{}}>Next Round</Button>
         ):(
           <Button 
-            onClick={()=> setModalStatus(!modalStatus) } 
+            onClick={()=> { setModalStatus(!modalStatus); playClick() } } 
             color="secondary"
             sx={{}}>Try Again</Button>
         )}
