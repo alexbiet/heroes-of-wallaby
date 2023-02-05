@@ -23,17 +23,6 @@ export default function Home() {
     volume: 1.5,
   });
 
-  const walk = new Howl({
-    src: ["/sfx/footsteps/step_cloth_1.ogg"],
-    volume: 1,
-    loop: true,
-  });
-
-  const fight_1 = new Howl({
-    src: ["/sfx/fight/new_hits_1.wav"],
-    volume: 1,
-  });
-
   const fight_2 = new Howl({
     src: ["/sfx/fight/big_punch.wav"],
     volume: 1,
@@ -202,6 +191,17 @@ export default function Home() {
       },
     });
 
+    const walk = new Howl({
+      src: ["/sfx/footsteps/step_cloth_1.ogg"],
+      volume: 1,
+      loop: true,
+    });
+
+    const fight_1 = new Howl({
+      src: ["/sfx/fight/new_hits_1.wav"],
+      volume: 1,
+    });
+
     const dirs: {
       [key: string]: Vec2;
     } = {
@@ -220,7 +220,7 @@ export default function Home() {
 
       function generateLevel(dungeonId: number) {
         if (dungeonId === 0) {
-          add([sprite("dungeon-2"), scale(0.79)]);
+          add([sprite("dungeon-1"), scale(0.79)]);
         }
         if (dungeonId === 1) {
           add([sprite("dungeon-2"), scale(0.79)]);
@@ -242,28 +242,6 @@ export default function Home() {
         };
 
         let dungeons = [
-          [
-            "====================",
-            "====================",
-            "====================",
-            "=== ==   ===   s   =",
-            "=== ==  ====       =",
-            "=== p    ===       =",
-            "===    ==      w   =",
-            "===    ==          =",
-            "===    ==          =",
-            "===                =",
-            "===                =",
-            "===                =",
-            "=====-           ===",
-            "=====-           ===",
-            "===                =",
-            "====               =",
-            "===                =",
-            "========-   ========",
-            "=========   ========",
-            "=========   ========",
-          ],
           [
             "====================",
             "=========x==========",
@@ -288,8 +266,30 @@ export default function Home() {
           ],
           [
             "====================",
+            "====================",
+            "====================",
+            "=== ==   ===   s ===",
+            "=== ==  ==== =  ====",
+            "=== p    ===     ===",
+            "===    ==      w ===",
+            "===    ==      = ===",
+            "===    ==        ===",
+            "===              ===",
+            "===      ==-     ===",
+            "===      ==-     ===",
+            "=====-    =-     ===",
+            "=====- =       = ===",
+            "===        =-    ===",
+            "====           =====",
+            "===            =====",
+            "========-   ========",
+            "=========x  ========",
+            "=========   ========",
+          ],
+          [
+            "====================",
             "=       =          =",
-            "=                  =",
+            "=       =          =",
             "=              s   =",
             "=   p              =",
             "=                  =",
@@ -316,10 +316,6 @@ export default function Home() {
           height: 40,
           "=": () => [
             "wall",
-            sprite("square", {
-              width: 40,
-              height: 40,
-            }),
             solid(),
             area({
               width: 40,
@@ -431,7 +427,7 @@ export default function Home() {
     });
 
     go("game", 0);
-  }, [fight_1, provider, walk]);
+  }, [provider]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
