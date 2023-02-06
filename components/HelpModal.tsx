@@ -1,5 +1,6 @@
 import { Box, Button, Stack, Typography, Icon } from "@mui/material";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 type modalProps = {
   buttonText : string;
@@ -54,6 +55,9 @@ function HelpModal(props: modalProps) {
       {/* <Typography variant="body1">{modalText}</Typography> */}
       <br />
       <small>
+      <Typography variant="body1"><b>Testnet</b> - <Link href="https://hyperspace.yoga/#faucet" target="_blank">Faucet tFIL</Link></Typography>
+      <br />
+      
       <Typography variant="body1"><b>1. 👽 Create Character</b> - Mint your NFT hero by staking 10 FIL. Mint cost is 10%.</Typography>
       <br />
       <Typography variant="body1"><b>2. 🏛️ Enter Dungeons</b> - fight enemies for 10 rounds, win to earn rewards and increase your stake.</Typography>
