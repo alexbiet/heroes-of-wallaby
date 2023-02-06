@@ -828,9 +828,11 @@ export default function Home() {
           if (player.hp() === 0) {
             // go("gameover");
             loss.play();
-            setTimeout(()=> {
-              router.push({pathname: '/game', query: { h: heroId, d: difficultyId, w: 0}});
-            }, 800);
+
+            setFailModal(true);
+            // setTimeout(()=> {
+            //   router.push({pathname: '/game', query: { h: heroId, d: difficultyId, w: 0}});
+            // }, 800);
           }
         });
 
@@ -875,9 +877,6 @@ export default function Home() {
 
         onCollide("player", "enemy", async (p, e) => {
           console.log("collided");
-
-          setFailModal(true);
-
 
           if(router.query.h) {
             if(router.query.h == "1") {
