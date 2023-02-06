@@ -56,7 +56,7 @@ export default function Heroes() {
     console.log("minting" + heroNumber);
     gameContractPlayerWithSigner.depositMint(heroNumber, {
       value: ethers.utils.parseEther("0.1"),
-      gasLimit: 1000000000,
+      gasLimit: 7920027,
     });
   }
 
@@ -101,7 +101,8 @@ export default function Heroes() {
         }}
       >
         <Stack sx={{}}>
-          <Card variant="elevation"
+          <Card
+            variant="elevation"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -143,7 +144,7 @@ export default function Heroes() {
                   <i className="nes-icon heart"></i>
                   <br />
                   <br />
-                  Stake: 0.1 tFIL 
+                  Stake: 0.1 tFIL
                   <br />
                   <br />
                   Cost: 10%
@@ -205,7 +206,8 @@ export default function Heroes() {
         </Stack>
 
         <Stack sx={{}}>
-          <Card variant="elevation"
+          <Card
+            variant="elevation"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -247,7 +249,7 @@ export default function Heroes() {
                   <i className="nes-icon heart"></i>
                   <br />
                   <br />
-                  Stake: 0.1 tFIL 
+                  Stake: 0.1 tFIL
                   <br />
                   <br />
                   Cost: 10%
@@ -301,7 +303,8 @@ export default function Heroes() {
         </Stack>
 
         <Stack>
-          <Card variant="elevation"
+          <Card
+            variant="elevation"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -343,7 +346,7 @@ export default function Heroes() {
                   <i className="nes-icon heart"></i>
                   <br />
                   <br />
-                  Stake: 0.1 tFIL 
+                  Stake: 0.1 tFIL
                   <br />
                   <br />
                   Cost: 10%

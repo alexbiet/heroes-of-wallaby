@@ -65,23 +65,17 @@ contract HeroesOfWallaby is
         string memory uri = string(abi.encodePacked(heroString, ".png"));
         require(msg.value == stakeToMint);
         safeMint(msg.sender, uri);
+        _tokenIdCounter.increment();
+        totalRewards += (stakeToMint * 10) / 100;
+        totalStaked += stakeToMint - ((stakeToMint * 10) / 100);
+
         Hero memory hero = Hero({
             id: _tokenIdCounter.current(),
             prestige: 0,
             status: Status.Idle,
-            heroType: HeroType.Swardarian
+            heroType: HeroType(_hero - 1)
         });
-
-        if (_hero == 1) {
-            hero.heroType = HeroType.Barberino;
-        } else if (_hero == 2) {
-            hero.heroType = HeroType.Wallamaster;
-        }
-
         idToHero[_tokenIdCounter.current()] = hero;
-        _tokenIdCounter.increment();
-        totalRewards += (stakeToMint * 10) / 100;
-        totalStaked += stakeToMint - ((stakeToMint * 10) / 100);
     }
 
     function depositRewards() public payable {
