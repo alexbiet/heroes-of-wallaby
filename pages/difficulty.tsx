@@ -64,7 +64,7 @@ export default function Heroes() {
 
         <Card
           onClick={() => { setSelected(1); playClick }}
-          className={selected === 1 ? "pixel-box--primary-custom" : "pixel-borders--2"}
+          variant={selected === 1 ? "outlined" : "elevation"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -83,22 +83,22 @@ export default function Heroes() {
             <Image src="/assets/easy.png" height={226} width={226} alt="Easy" style={{border: "3px solid #fff", }}/>
           </CardMedia>
           <CardContent sx={{marginTop: "-10px", paddingTop: "0 !important", paddingBottom: "0 !important"}}>
-            <Typography variant="h6" sx={{ color: selected === 0 ? "#20A1FE" : "black"}}>Easy</Typography>
+            <Typography variant="h6" sx={{ color: selected === 1 ? "#20A1FE" : "black"}}>Easy</Typography>
           </CardContent>
             <small>
             <CardContent>
-            Reward: 0.1% FIL
+            Reward: 0.1 tFIL
             <br />
             <br />
-            Risk: 0% stake
+            Risk: 0 
             <br />
             <br />
-            Description: heheh</CardContent>
+            Level 0.2/dgn.</CardContent>
             </small>
         </Card>
         <Card
           onClick={() => { setSelected(2); playClick }}
-          className={selected === 2 ? "pixel-box--primary-custom" : "pixel-borders--2"}
+          variant={selected === 2 ? "outlined" : "elevation"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -117,23 +117,23 @@ export default function Heroes() {
             <Image src="/assets/medium.png" height={226} width={226} alt="Medium" style={{border: "3px solid #fff", }} />
           </CardMedia>
           <CardContent sx={{marginTop: "-10px", paddingTop: "0 !important", paddingBottom: "0 !important"}}>
-            <Typography variant="h6" sx={{ color: selected === 1 ? "#20A1FE" : "black"}}>Medium</Typography>
+            <Typography variant="h6" sx={{ color: selected === 2 ? "#20A1FE" : "black"}}>Medium</Typography>
           </CardContent>
             <small>
             <CardContent>
-            Reward: 4% FIL
+            Reward: 0.2 tFIL
             <br />
             <br />
-            Risk: -2% stake
+            Risk: -0.2 tFIL
             <br />
             <br />
-            Earn 0.5 Prestige</CardContent>
+            Level 0.5/dgn.</CardContent>
             </small>
         </Card>
 
         <Card
           onClick={() => { setSelected(3); playClick }}
-          className={selected === 3 ? "pixel-box--primary-custom" : "pixel-borders--2"}
+          variant={selected === 3 ? "outlined" : "elevation"}
           sx={{
             padding: "0 !important",
             textAlign : "center",
@@ -151,17 +151,17 @@ export default function Heroes() {
             <Image src="/assets/hard.png" height={226} width={226} alt="DeGen" style={{border: "3px solid #fff", }} />
           </CardMedia>
           <CardContent sx={{marginTop: "-10px", paddingTop: "0 !important", paddingBottom: "0 !important"}}>
-            <Typography variant="h6" sx={{ color: selected === 2 ? "#20A1FE" : "black"}}>DeGen Mode</Typography>
+            <Typography variant="h6" sx={{ color: selected === 3 ? "#20A1FE" : "black"}}>DeGen Mode</Typography>
           </CardContent>
             <small>
             <CardContent>
-            Reward: 10% FIL
+            Reward: 0.8 tFIL
             <br />
             <br />
-            Risk: -6% stake
+            Risk: -0.5 tFIL
             <br />
             <br />
-            Earn 1 Prestige</CardContent>
+            Level 1/dgn.</CardContent>
             </small>
         </Card>
 
@@ -171,7 +171,7 @@ export default function Heroes() {
           href={{
             pathname: "/game",
             query: {
-              h: router.query.h,
+              h: router.query.h || 1,
               d: selected,
             }
           }} 

@@ -25,7 +25,7 @@ export const CustomConnect = () => {
               paddingBottom: "15px"
             }}
           >
-            <Typography>TVL: 0.00 FIL</Typography>
+            <Typography>TVL: 105.02 tFIL</Typography>
 
             <Box
               sx={{

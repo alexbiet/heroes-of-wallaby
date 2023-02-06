@@ -96,9 +96,6 @@ export default function Home() {
 
       console.log("Win: " + winModal);
       console.log("Fail: " + failModal);
-    } else {
-      setWinModal(false);
-      setFailModal(false);
     }
 
     const k = kaboom({
@@ -827,10 +824,6 @@ export default function Home() {
             loss.play();
 
             setFailModal(true);
-
-            // setTimeout(()=> {
-            //   router.push({pathname: '/game', query: { h: heroId, d: difficultyId, w: 0}});
-            // }, 800);
           }
         });
 
@@ -894,17 +887,20 @@ export default function Home() {
               player.hurt(1);
               e.destroy();
 
-              add([
-                sprite("heartFull"),
-                scale(0.8),
-                solid(),
-                pos(e.pos.x, e.pos.y),
-                area({
-                  width: 40,
-                  height: 40,
-                }),
-                "life",
-              ]);
+
+              if(Boolean(Math.round(Math.random()))) {
+                add([
+                  sprite("heartFull"),
+                  scale(0.8),
+                  solid(),
+                  pos(e.pos.x, e.pos.y),
+                  area({
+                    width: 40,
+                    height: 40,
+                  }),
+                  "life",
+                ]);
+              }
               //% chance to drop heart
             },
           });
@@ -918,17 +914,17 @@ export default function Home() {
           // console.log(bal.toString());
         });
 
-        onCollide("player", "life", (p, l) => {
+        onCollide("player", "life", (player, l) => {
           l.destroy();
           pickItem.play();
 
-          if (p.hp() < 3) {
-            p.heal(1);
-          }
+          if (player.hp() < 3) {
+            player.heal(1);
 
-          hearts.push(
-            add([sprite("heartFull"), pos(30 + (player.hp() - 1) * 64, 30), "heartFull"])
-          );
+            hearts.push(
+              add([sprite("heartFull"), pos(30 + (player.hp() - 1) * 64, 30), "heartFull"])
+            );
+          }
         });
       }
 
@@ -936,7 +932,7 @@ export default function Home() {
     });
 
     go("game", 0, 3);
-  }, [door, failModal, loss, pickItem, provider, router, selectedHero, winModal]);
+  }, [door, provider]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
@@ -1002,7 +998,7 @@ export default function Home() {
             bottom: "0",
             margin: "auto",
             width: "800px",
-            height: "400px",
+            height: "340px",
             padding: "40px 40px",
             background:
               "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
@@ -1076,7 +1072,8 @@ export default function Home() {
             <Button
               onClick={() => {
                 playClick();
-                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}})
+                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}});
+                setWinModal(false);
               }}
               color="secondary"
               sx={{}}
@@ -1087,7 +1084,8 @@ export default function Home() {
             <Button
               onClick={() => {
                 playClick();
-                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}})
+                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}});
+                setFailModal(false);
               }}
               color="secondary"
               sx={{}}
