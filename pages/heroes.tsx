@@ -56,7 +56,7 @@ export default function Heroes() {
     console.log("minting" + heroNumber);
     gameContractPlayerWithSigner.depositMint(heroNumber, {
       value: ethers.utils.parseEther("0.1"),
-      gasLimit: 7920027,
+      gasLimit: 1000000000,
     });
   }
 
