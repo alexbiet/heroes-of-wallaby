@@ -72,14 +72,13 @@ export default function Home() {
     }
 
     if (router.query.d) {
-
       setDifficultyId(router.query.d.toString());
       if (router.query.d.toString() == "1") {
-        setSelectedDifficulty("Easy")
+        setSelectedDifficulty("Easy");
       } else if (router.query.d.toString() == "2") {
-        setSelectedDifficulty("Moderate")
+        setSelectedDifficulty("Moderate");
       } else {
-        setSelectedDifficulty("DeGen Mode")
+        setSelectedDifficulty("DeGen Mode");
       }
     }
 
@@ -95,8 +94,8 @@ export default function Home() {
         setFailModal(true);
       }
 
-      console.log("Win: " + winModal)
-      console.log("Fail: " + failModal)
+      console.log("Win: " + winModal);
+      console.log("Fail: " + failModal);
     }
 
     const k = kaboom({
@@ -524,7 +523,7 @@ export default function Home() {
       src: ["/sfx/fight/big_punch.wav"],
       volume: 1,
     });
-  
+
     const fight_3 = new Howl({
       src: ["/sfx/fight/fire_attack.wav"],
       volume: 0.5,
@@ -541,9 +540,7 @@ export default function Home() {
     const SPEED = 300;
 
     scene("gameover", () => {
-
       setFailModal(true);
-
     });
 
     scene("game", (dungeonId: number, playerHealth: number) => {
@@ -785,7 +782,7 @@ export default function Home() {
           e: (e: string) => [
             "enemy",
             solid(),
-            sprite(characters[Math.floor(Math.random() * (characters.length-1))].sprite),
+            sprite(characters[Math.floor(Math.random() * (characters.length - 1))].sprite),
             area(),
           ],
           p: () => [
@@ -828,8 +825,8 @@ export default function Home() {
           if (player.hp() === 0) {
             // go("gameover");
             loss.play();
-            setTimeout(()=> {
-              router.push({pathname: '/game', query: { h: heroId, d: difficultyId, w: 0}});
+            setTimeout(() => {
+              router.push({ pathname: "/game", query: { h: heroId, d: difficultyId, w: 0 } });
             }, 800);
           }
         });
@@ -864,7 +861,7 @@ export default function Home() {
         }
 
         onCollide("player", "door", (p, d) => {
-          if ( dungeonId < 2 ) {
+          if (dungeonId < 2) {
             go("game", dungeonId + 1, player.hp());
             player.pos = vec2(200, 100);
             door.play();
@@ -876,11 +873,8 @@ export default function Home() {
         onCollide("player", "enemy", async (p, e) => {
           console.log("collided");
 
-          setFailModal(true);
-
-
-          if(router.query.h) {
-            if(router.query.h == "1") {
+          if (router.query.h) {
+            if (router.query.h == "1") {
               fight_1.play();
             } else if (router.query.h == "2") {
               fight_2.play();
@@ -890,18 +884,24 @@ export default function Home() {
               fight_1.play();
             }
           }
-          
+
           e.play("attack", {
             onEnd: () => {
               player.hurt(1);
               e.destroy();
 
-              add([sprite("heartFull"), scale(0.8), solid(), pos(164, 164), area({
-                width: 40,
-                height: 40,
-              }),"life"])
+              add([
+                sprite("heartFull"),
+                scale(0.8),
+                solid(),
+                pos(e.pos.x, e.pos.y),
+                area({
+                  width: 40,
+                  height: 40,
+                }),
+                "life",
+              ]);
               //% chance to drop heart
-
             },
           });
           p.play("attack", {
@@ -922,10 +922,10 @@ export default function Home() {
             player.heal(1);
           }
 
-          hearts.push(add([sprite("heartFull"), pos(30 + (player.hp()-1) * 64, 30), "heartFull"]));
-
+          hearts.push(
+            add([sprite("heartFull"), pos(30 + (player.hp() - 1) * 64, 30), "heartFull"])
+          );
         });
-
       }
 
       generateLevel(dungeonId);
@@ -987,9 +987,9 @@ export default function Home() {
           <Button style={{ float: "right", marginTop: "-60px" }}>MENU</Button>
         </Link>
 
-
-
-        <Stack className="pixel-borders--2" sx={{ 
+        <Stack
+          className="pixel-borders--2"
+          sx={{
             display: winModal || failModal ? "block" : "none",
             position: "absolute",
             left: "0",
@@ -1000,50 +1000,96 @@ export default function Home() {
             width: "800px",
             height: "400px",
             padding: "40px 40px",
-            background: "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
-          }}>
-
-        {(winModal) ? (
-           <Typography variant="h5" color="#000"> Dungeon Completed! </Typography>
-          ):(
-            <Typography variant="h5" color="#D20404"> Dungeon Completed! </Typography>
+            background:
+              "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
+          }}
+        >
+          {winModal ? (
+            <Typography variant="h5" color="#000">
+              {" "}
+              Dungeon Completed!{" "}
+            </Typography>
+          ) : (
+            <Typography variant="h5" color="#D20404">
+              {" "}
+              Dungeon Completed!{" "}
+            </Typography>
           )}
-          
-        <br />
-        <small>
-        <Typography variant="body1">Dungeon Mode: Easy</Typography>
-        <br />
 
-        {(winModal) ? (
-            <Typography variant="body1">Rewards: <Box component="div" sx={{ display: 'inline', color: "#00FF19", textShadow: "2px 2px 0px rgba(0,0,0,0.5)"}}>+0.2 tFIL</Box><br /></Typography>
-          ):(
-            <Typography variant="body1">Loss: <Box component="div" sx={{ display: 'inline', color: "#D20404", textShadow: "2px 2px 0px rgba(0,0,0,0.3)"}}>-0.2 tFIL</Box><br /></Typography>
-          )}
-        </small>
-          
+          <br />
+          <small>
+            <Typography variant="body1">Dungeon Mode: Easy</Typography>
+            <br />
+
+            {winModal ? (
+              <Typography variant="body1">
+                Rewards:{" "}
+                <Box
+                  component="div"
+                  sx={{
+                    display: "inline",
+                    color: "#00FF19",
+                    textShadow: "2px 2px 0px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  +0.2 tFIL
+                </Box>
+                <br />
+              </Typography>
+            ) : (
+              <Typography variant="body1">
+                Loss:{" "}
+                <Box
+                  component="div"
+                  sx={{
+                    display: "inline",
+                    color: "#D20404",
+                    textShadow: "2px 2px 0px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  -0.2 tFIL
+                </Box>
+                <br />
+              </Typography>
+            )}
+          </small>
+
           <br />
           <br />
 
           <Link href="/heroes" passHref>
-          <Button 
-            onClick={()=> { playClick() } } 
-            sx={{padding: "10px 20px 10px 20px !important"}}>Go To Menu</Button>
+            <Button
+              onClick={() => {
+                playClick();
+              }}
+              sx={{ padding: "10px 20px 10px 20px !important" }}
+            >
+              Go To Menu
+            </Button>
           </Link>
 
-          {(winModal) ? (
-            <Button 
-              onClick={()=> { playClick() }  } 
+          {winModal ? (
+            <Button
+              onClick={() => {
+                playClick();
+              }}
               color="secondary"
-              sx={{}}>Next Round</Button>
-          ):(
-            <Button 
-              onClick={()=> { playClick() } } 
+              sx={{}}
+            >
+              Next Round
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                playClick();
+              }}
               color="secondary"
-              sx={{}}>Try Again</Button>
+              sx={{}}
+            >
+              Try Again
+            </Button>
           )}
-
         </Stack>
-
       </Stack>
 
       <Box sx={{}}>
