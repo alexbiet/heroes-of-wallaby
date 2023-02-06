@@ -887,8 +887,7 @@ export default function Home() {
               player.hurt(1);
               e.destroy();
 
-
-              if(Boolean(Math.round(Math.random()))) {
+              if (Boolean(Math.round(Math.random()))) {
                 add([
                   sprite("heartFull"),
                   scale(0.8),
@@ -1072,7 +1071,7 @@ export default function Home() {
             <Button
               onClick={() => {
                 playClick();
-                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}});
+                router.push({ pathname: "/game", query: { h: heroId, d: difficultyId } });
                 setWinModal(false);
               }}
               color="secondary"
@@ -1084,7 +1083,7 @@ export default function Home() {
             <Button
               onClick={() => {
                 playClick();
-                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}});
+                router.push({ pathname: "/game", query: { h: heroId, d: difficultyId } });
                 setFailModal(false);
               }}
               color="secondary"
