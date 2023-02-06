@@ -2,21 +2,66 @@ import { CustomConnect } from "@/components/CustomConnect";
 import { Box, Card, CardContent, CardMedia, Stack, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Howl, Howler } from "howler";
 import { useRouter } from "next/router";
+import { CONTRACT_ABI, CONTRACT_ADDRESS, DEPLOYER_PK } from "@/constants/constants";
+import { ethers } from "ethers";
+import { useAccount, useProvider, useSigner } from "wagmi";
 
 export default function Heroes() {
   const [selected, setSelected] = useState<number>(-1);
+  const [ownsHero, setOwnsHero] = useState<boolean>(false);
+  const [heroes, setHeroes] = useState<any[]>([]);
   const router = useRouter();
+  //get address from wagmi
+  const { address } = useAccount();
+  const provider = useProvider();
+  const { data: signer } = useSigner();
+
+  const gameSigner = new ethers.Wallet(DEPLOYER_PK, provider);
+  const gameContractPlayerWithSigner = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer!);
+  const gameContractPlayer = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
     volume: 1.5,
   });
 
-  function playClick() {
+  useEffect(() => {
+    //check if user has a hero
+    const checkHero = async () => {
+      const balance = await gameContractPlayer.balanceOf(address);
+      if (balance > 0) {
+        setOwnsHero(true);
+      }
+    };
+    const getAllHeroes = async () => {
+      setHeroes(await gameContractPlayerWithSigner.getAllHeroes());
+    };
+
+    if (address && gameContractPlayer && gameContractPlayerWithSigner.provider) {
+      checkHero();
+      if (ownsHero && heroes.length === 0) getAllHeroes();
+      console.log(heroes);
+    }
+  }, [address, gameContractPlayer, gameContractPlayerWithSigner, heroes, heroes.length, ownsHero]);
+
+  function handlePlay(heroNumber: number) {
+    setSelected(heroNumber);
     click.play();
+  }
+
+  function handleMint(heroNumber: number) {
+    console.log("minting" + heroNumber);
+    gameContractPlayerWithSigner.depositMint(heroNumber, {
+      value: ethers.utils.parseEther("0.1"),
+      gasLimit: 1000000000,
+    });
+  }
+
+  function handleBurn(heroNumber: number) {
+    gameContractPlayerWithSigner.reclaimStake(heroNumber);
   }
 
   return (
@@ -116,6 +161,7 @@ export default function Heroes() {
             }}
           >
             <Link
+              hidden={!ownsHero}
               href={{
                 pathname: "/difficulty",
                 query: {
@@ -124,24 +170,35 @@ export default function Heroes() {
               }}
               passHref
               onClick={() => {
-                playClick;
+                handlePlay(1);
               }}
             >
               <Button sx={{ width: "100%" }}>Pick</Button>
             </Link>
+            <Button
+              hidden={ownsHero}
+              color="success"
+              style={{ width: "100%" }}
+              onClick={() => handleMint(1)}
+            >
+              Mint
+            </Button>
 
-            <Link
-              href="#"
-              passHref
-              style={{ width: "100%", textAlign: "center", marginTop: "-20px" }}
+            <Box
+              sx={{ width: "100%", textAlign: "center", marginTop: "-20px" }}
               onClick={() => {
-                playClick;
+                handleBurn(1);
               }}
             >
-              <Button color="error" sx={{ padding: "10px 20px 10px 20px !important" }}>
+              <Button
+                hidden={!ownsHero}
+                onClick={() => handleBurn(1)}
+                color="error"
+                sx={{ padding: "10px 20px 10px 20px !important" }}
+              >
                 Burn
               </Button>
-            </Link>
+            </Box>
           </Stack>
         </Stack>
 
@@ -199,6 +256,7 @@ export default function Heroes() {
           </Card>
 
           <Link
+            hidden={!ownsHero}
             href={{
               pathname: "/difficulty",
               query: {
@@ -207,14 +265,35 @@ export default function Heroes() {
             }}
             passHref
             onClick={() => {
-              playClick;
+              handlePlay(2);
             }}
           >
             <Button sx={{ width: "100%" }}>Pick</Button>
           </Link>
-          <Button color="success" style={{ width: "100%" }} onClick={playClick}>
+          <Button
+            hidden={ownsHero}
+            color="success"
+            style={{ width: "100%" }}
+            onClick={() => handleMint(2)}
+          >
             Mint
           </Button>
+
+          <Box
+            sx={{ width: "100%", textAlign: "center" }}
+            onClick={() => {
+              handleBurn(3);
+            }}
+          >
+            <Button
+              hidden={!ownsHero}
+              onClick={() => handleBurn(2)}
+              color="error"
+              sx={{ padding: "10px 20px 10px 20px !important" }}
+            >
+              Burn
+            </Button>
+          </Box>
         </Stack>
 
         <Stack>
@@ -271,6 +350,7 @@ export default function Heroes() {
           </Card>
 
           <Link
+            hidden={!ownsHero}
             href={{
               pathname: "/difficulty",
               query: {
@@ -278,15 +358,34 @@ export default function Heroes() {
               },
             }}
             passHref
-            onClick={() => {
-              playClick;
-            }}
+            onClick={() => handlePlay(3)}
           >
             <Button sx={{ width: "100%" }}>Pick</Button>
           </Link>
-          <Button color="success" style={{ width: "100%" }} onClick={playClick}>
+          <Button
+            hidden={ownsHero}
+            color="success"
+            style={{ width: "100%" }}
+            onClick={() => handleMint(3)}
+          >
             Mint
           </Button>
+
+          <Box
+            sx={{ width: "100%", textAlign: "center" }}
+            onClick={() => {
+              handleBurn(3);
+            }}
+          >
+            <Button
+              hidden={!ownsHero}
+              onClick={() => handleBurn(3)}
+              color="error"
+              sx={{ padding: "10px 20px 10px 20px !important" }}
+            >
+              Burn
+            </Button>
+          </Box>
         </Stack>
       </Box>
 

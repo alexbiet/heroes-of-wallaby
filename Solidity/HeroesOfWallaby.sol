@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 /// @custom:security-contact markeljan19@gmail.com
 contract HeroesOfWallaby is
@@ -57,25 +58,39 @@ contract HeroesOfWallaby is
     //////////////  MINT LOGIC    ////////////
     //////////////////////////////////////////
 
-    //0.1 tFil
     uint256 public stakeToMint = 100000000000000000;
 
-    function depositMint() public payable {
+    function depositMint(uint256 _hero) public payable {
+        string memory heroString = Strings.toString(_hero);
+        string memory uri = string(abi.encodePacked(heroString, ".png"));
         require(msg.value == stakeToMint);
-        _safeMint(msg.sender, _tokenIdCounter.current());
-        //send 10% to rewardPool
-        payable(owner()).transfer(10000000000000000);
+        safeMint(msg.sender, uri);
+        _tokenIdCounter.increment();
+        totalRewards += (stakeToMint * 10) / 100;
+        totalStaked += stakeToMint - ((stakeToMint * 10) / 100);
+
+        Hero memory hero = Hero({
+            id: _tokenIdCounter.current(),
+            prestige: 0,
+            status: Status.Idle,
+            heroType: HeroType(_hero - 1)
+        });
+        idToHero[_tokenIdCounter.current()] = hero;
+    }
+
+    function depositRewards() public payable {
+        require(msg.value > 0);
+        totalRewards += msg.value;
     }
 
     function reclaimStake(uint256 _tokenId) public {
         require(ownerOf(_tokenId) == msg.sender);
         _burn(_tokenId);
-        payable(msg.sender).transfer(90000000000000000);
+        payable(msg.sender).transfer((stakeToMint * 90) / 100);
     }
 
     function safeMint(address to, string memory uri) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
@@ -86,13 +101,19 @@ contract HeroesOfWallaby is
 
     enum Status {
         Idle,
-        Resting
+        Questing
+    }
+    enum HeroType {
+        Swardarian,
+        Barberino,
+        Wallamaster
     }
 
     struct Hero {
         uint256 id;
         uint256 prestige;
         Status status;
+        HeroType heroType;
     }
 
     mapping(uint256 => Hero) public idToHero;
@@ -111,6 +132,16 @@ contract HeroesOfWallaby is
         idToHero[_id].status = _status;
     }
 
+    function getAllHeroes() public view returns (Hero[] memory) {
+        //return all heroes for a given address
+        uint256 tokenCount = balanceOf(msg.sender);
+        Hero[] memory heroes = new Hero[](tokenCount);
+        for (uint256 i = 0; i < tokenCount; i++) {
+            heroes[i] = idToHero[tokenOfOwnerByIndex(msg.sender, i)];
+        }
+        return heroes;
+    }
+
     //////////////////////////////////////////
     //////////////  Game Logic    ////////////
     //////////////////////////////////////////
@@ -118,7 +149,34 @@ contract HeroesOfWallaby is
     function startGame(uint256 _id) public {
         require(ownerOf(_id) == msg.sender);
         require(idToHero[_id].status == Status.Idle, "Hero is not idle");
-        idToHero[_id].status = Status.Resting;
+        idToHero[_id].status = Status.Questing;
+    }
+
+    function endGame(
+        uint256 _id,
+        uint256 rewardMultiplier,
+        bool dead
+    ) public onlyOwner {
+        require(ownerOf(_id) == msg.sender);
+        require(
+            idToHero[_id].status == Status.Questing,
+            "Hero is not Questing"
+        );
+        if (dead) {
+            _burn(_id);
+        } else {
+            idToHero[_id].status = Status.Idle;
+        }
+        if (rewardMultiplier > 0) {
+            idToHero[_id].prestige += 1;
+            // send 10% of total rewards to owner
+            payable(ownerOf(_id)).transfer(
+                ((totalRewards * 10) / 100) *
+                    (rewardMultiplier + idToHero[_id].prestige / 100)
+            );
+            totalRewards -= ((totalRewards * 10) / 100) * rewardMultiplier;
+            totalWithdrawn += ((totalRewards * 10) / 100) * rewardMultiplier;
+        }
     }
 
     // The following functions are overrides required by Solidity.

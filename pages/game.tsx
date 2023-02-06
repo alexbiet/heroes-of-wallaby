@@ -12,6 +12,7 @@ import { useProvider } from "wagmi";
 import RoundModal from "@/components/RoundModal";
 import { Howl, Howler } from "howler";
 import { useRouter } from "next/router";
+import { CONTRACT_ABI, CONTRACT_ADDRESS, DEPLOYER_PK } from "@/constants/constants";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -20,6 +21,8 @@ export default function Home() {
   const provider = useProvider();
   const router = useRouter();
   const [selectedHero, setSelectedHero] = useState<string>("");
+  const gameSigner = new ethers.Wallet(DEPLOYER_PK, provider);
+  const gameContractOwner = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, gameSigner);
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
@@ -467,6 +470,9 @@ export default function Home() {
         }
 
         onCollide("player", "door", (p, d) => {
+          if (dungeonId === 2) {
+            go("win");
+          }
           go("game", dungeonId + 1, player.hp());
           player.pos = vec2(200, 100);
         });
