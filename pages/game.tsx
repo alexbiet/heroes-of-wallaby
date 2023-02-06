@@ -96,6 +96,9 @@ export default function Home() {
 
       console.log("Win: " + winModal);
       console.log("Fail: " + failModal);
+    } else {
+      setWinModal(false);
+      setFailModal(false);
     }
 
     const k = kaboom({
@@ -988,7 +991,7 @@ export default function Home() {
         </Link>
 
         <Link href="/heroes" onClick={playClick}>
-          <Button style={{ float: "right", marginTop: "-60px" }}>MENU</Button>
+          <Button style={{ float: "right", marginTop: "-60px", marginRight: "40px" }}>MENU</Button>
         </Link>
 
         <Stack
@@ -1109,9 +1112,10 @@ export default function Home() {
           <Typography
             sx={{
               color: "#777",
-              p: "0",
               m: "0",
-              pb: "10px",
+              mt: "20px",
+              pt: "30px",
+              pb: "20px",
             }}
           >
             <small>
