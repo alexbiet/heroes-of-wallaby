@@ -183,7 +183,7 @@ export default function Heroes() {
               style={{ width: "100%" }}
               onClick={() => handleMint(1)}
             >
-              Mint
+              Mint NFT
             </Button>
 
             <Box
@@ -260,7 +260,7 @@ export default function Heroes() {
           </Card>
 
           <Link
-            hidden={!ownsHero}
+            hidden={ownsHero}
             href={{
               pathname: "/difficulty",
               query: {
@@ -275,12 +275,12 @@ export default function Heroes() {
             <Button sx={{ width: "100%" }}>Pick</Button>
           </Link>
           <Button
-            hidden={ownsHero}
+            hidden={!ownsHero}
             color="success"
             style={{ width: "100%" }}
             onClick={() => handleMint(2)}
           >
-            Mint
+            Mint NFT
           </Button>
 
           <Box
@@ -290,7 +290,7 @@ export default function Heroes() {
             }}
           >
             <Button
-              hidden={!ownsHero}
+              hidden={ownsHero}
               onClick={() => handleBurn(2)}
               color="error"
               sx={{ padding: "10px 20px 10px 20px !important" }}
@@ -374,7 +374,7 @@ export default function Heroes() {
             style={{ width: "100%" }}
             onClick={() => handleMint(3)}
           >
-            Mint
+            Mint NFT
           </Button>
 
           <Box
