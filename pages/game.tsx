@@ -827,6 +827,7 @@ export default function Home() {
             loss.play();
 
             setFailModal(true);
+
             // setTimeout(()=> {
             //   router.push({pathname: '/game', query: { h: heroId, d: difficultyId, w: 0}});
             // }, 800);
@@ -868,6 +869,7 @@ export default function Home() {
             player.pos = vec2(200, 100);
             door.play();
           } else {
+            win.play();
             setWinModal(true);
           }
         });
@@ -1014,13 +1016,13 @@ export default function Home() {
           ) : (
             <Typography variant="h5" color="#D20404">
               {" "}
-              Dungeon Completed!{" "}
+              Dungeon Failed!{" "}
             </Typography>
           )}
 
           <br />
           <small>
-            <Typography variant="body1">Dungeon Mode: Easy</Typography>
+            <Typography variant="body1">Dungeon Mode: {selectedDifficulty}</Typography>
             <br />
 
             {winModal ? (
@@ -1074,6 +1076,7 @@ export default function Home() {
             <Button
               onClick={() => {
                 playClick();
+                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}})
               }}
               color="secondary"
               sx={{}}
@@ -1084,6 +1087,7 @@ export default function Home() {
             <Button
               onClick={() => {
                 playClick();
+                router.push({pathname: '/game', query: { h: heroId, d: difficultyId}})
               }}
               color="secondary"
               sx={{}}
