@@ -109,6 +109,7 @@ export const theme = createTheme({
           display: "inline-block",
           margin: "0 15px 15px 0",
           padding: "15px 20px",
+          background: "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
         },
 
       },
@@ -117,7 +118,7 @@ export const theme = createTheme({
           props: { variant: "elevation" },
           style: {
             color: "#000",
-            background: "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
+            background: "#fff",
             borderRadius: "20px",
             borderStyle: "solid",
             borderWidth: "4px",
@@ -131,11 +132,10 @@ export const theme = createTheme({
         {
           props: { variant: "outlined" },
           style: {
-            // color: "#fff",
             borderStyle: "solid",
             borderWidth: "4px",
             borderColor: "#0f98ff !important",
-            background: "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
+            background: "#fff",
             borderImageSlice: "4",
             borderImageWidth: "2",
             borderImageOutset: "0",

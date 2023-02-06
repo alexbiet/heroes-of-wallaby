@@ -101,7 +101,7 @@ export default function Heroes() {
         }}
       >
         <Stack sx={{}}>
-          <Card
+          <Card variant="elevation"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -115,7 +115,7 @@ export default function Heroes() {
               <small>
                 <Typography variant="h6">Swardarian</Typography>
                 <Typography variant="body1" sx={{ opacity: ".6" }}>
-                  Level 4
+                  Level 1
                 </Typography>
               </small>
             </CardContent>
@@ -143,10 +143,13 @@ export default function Heroes() {
                   <i className="nes-icon heart"></i>
                   <br />
                   <br />
-                  Stake: 2 FIL
+                  Stake: 0.1 tFIL 
                   <br />
                   <br />
-                  Rewards: 0.52 FIL
+                  Cost: 10%
+                  <br />
+                  <br />
+                  Weapon: Sward
                 </CardContent>
               </small>
             </CardContent>
@@ -202,7 +205,7 @@ export default function Heroes() {
         </Stack>
 
         <Stack sx={{}}>
-          <Card
+          <Card variant="elevation"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -244,10 +247,13 @@ export default function Heroes() {
                   <i className="nes-icon heart"></i>
                   <br />
                   <br />
-                  Stake: 2 FIL
+                  Stake: 0.1 tFIL 
                   <br />
                   <br />
-                  Rewards: 1.52 FIL
+                  Cost: 10%
+                  <br />
+                  <br />
+                  Weapon: Ironfists
                 </CardContent>
               </small>
             </CardContent>
@@ -295,7 +301,7 @@ export default function Heroes() {
         </Stack>
 
         <Stack>
-          <Card
+          <Card variant="elevation"
             sx={{
               padding: "0 !important",
               marginBottom: "20px",
@@ -337,10 +343,13 @@ export default function Heroes() {
                   <i className="nes-icon heart"></i>
                   <br />
                   <br />
-                  Stake: 2 FIL
+                  Stake: 0.1 tFIL 
                   <br />
                   <br />
-                  Rewards: 2.52 FIL
+                  Cost: 10%
+                  <br />
+                  <br />
+                  Weapon: Fireball
                 </CardContent>
               </small>
             </CardContent>
