@@ -11,6 +11,7 @@ import { ethers } from "ethers";
 import { useProvider } from "wagmi";
 import { Howl, Howler } from "howler";
 import { useRouter } from "next/router";
+import { CONTRACT_ABI, CONTRACT_ADDRESS, DEPLOYER_PK } from "@/constants/constants";
 
 export default function Home() {
   const canvasRef = useRef(null);
@@ -24,6 +25,8 @@ export default function Home() {
   const [difficultyId, setDifficultyId] = useState<string>("");
   const [failModal, setFailModal] = useState<boolean>(false);
   const [winModal, setWinModal] = useState<boolean>(false);
+  const gameSigner = new ethers.Wallet(DEPLOYER_PK, provider);
+  const gameContractOwner = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, gameSigner);
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
