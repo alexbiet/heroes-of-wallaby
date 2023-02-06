@@ -9,7 +9,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ethers } from "ethers";
 import { useProvider } from "wagmi";
-import RoundModal from "@/components/RoundModal";
 import { Howl, Howler } from "howler";
 import { useRouter } from "next/router";
 
@@ -20,6 +19,11 @@ export default function Home() {
   const provider = useProvider();
   const router = useRouter();
   const [selectedHero, setSelectedHero] = useState<string>("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
+  const [heroId, setHeroId] = useState<string>("");
+  const [difficultyId, setDifficultyId] = useState<string>("");
+  const [failModal, setFailModal] = useState<boolean>(false);
+  const [winModal, setWinModal] = useState<boolean>(false);
 
   const click = new Howl({
     src: ["/sfx/button_click.flac"],
@@ -32,12 +36,12 @@ export default function Home() {
   });
 
   const win = new Howl({
-    src: ["/sfx/win.aif"],
+    src: ["/sfx/win.wav"],
     volume: 1,
   });
 
   const loss = new Howl({
-    src: ["/sfx/loss.aif"],
+    src: ["/sfx/loss.wav"],
     volume: 1,
   });
 
@@ -58,11 +62,38 @@ export default function Home() {
     // socketInitializer();
 
     if (router.query.h) {
-      // console.log(router.query.h);
-      // console.log(router.query.d);
+      setHeroId(router.query.h.toString());
       setSelectedHero("/assets/hero-sprite-" + router.query.h + ".png");
     } else {
       setSelectedHero("/assets/hero-sprite-1.png");
+    }
+
+    if (router.query.d) {
+
+      setDifficultyId(router.query.d.toString());
+      if (router.query.d.toString() == "1") {
+        setSelectedDifficulty("Easy")
+      } else if (router.query.d.toString() == "2") {
+        setSelectedDifficulty("Moderate")
+      } else {
+        setSelectedDifficulty("DeGen Mode")
+      }
+    }
+
+    if (router.query.w) {
+      if (router.query.w.toString() == "0") {
+        setWinModal(false);
+        setFailModal(true);
+      } else if (router.query.w.toString() == "1") {
+        setWinModal(true);
+        setFailModal(false);
+      } else {
+        setWinModal(false);
+        setFailModal(true);
+      }
+
+      console.log("Win: " + winModal)
+      console.log("Fail: " + failModal)
     }
 
     const k = kaboom({
@@ -223,6 +254,256 @@ export default function Home() {
           attack: { from: 0, to: 2, speed: 4 },
         },
       },
+      zombie: {
+        x: 0,
+        y: 192,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      blueDevil: {
+        x: 0,
+        y: 256,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      redDevil: {
+        x: 0,
+        y: 320,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      greenDevil: {
+        x: 0,
+        y: 384,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      blueBoar: {
+        x: 0,
+        y: 448,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      redBoar: {
+        x: 0,
+        y: 512,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      pumpkinKing: {
+        x: 0,
+        y: 576,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      worm: {
+        x: 0,
+        y: 640,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      eyeball: {
+        x: 0,
+        y: 704,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      ghost: {
+        x: 0,
+        y: 768,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      snake: {
+        x: 0,
+        y: 832,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      bat: {
+        x: 0,
+        y: 896,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      flower: {
+        x: 0,
+        y: 960,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider1: {
+        x: 0,
+        y: 1024,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider2: {
+        x: 0,
+        y: 1088,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider3: {
+        x: 0,
+        y: 1152,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider4: {
+        x: 0,
+        y: 1216,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider5: {
+        x: 0,
+        y: 1280,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider6: {
+        x: 0,
+        y: 1344,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider7: {
+        x: 0,
+        y: 1408,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider8: {
+        x: 0,
+        y: 1472,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider9: {
+        x: 0,
+        y: 1536,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider10: {
+        x: 0,
+        y: 1600,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      spider11: {
+        x: 0,
+        y: 1664,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
+      bigBoss: {
+        x: 0,
+        y: 1728,
+        width: 192,
+        height: 64,
+        sliceX: 3,
+        anims: {
+          attack: { from: 0, to: 2, speed: 4 },
+        },
+      },
     });
 
     const walk = new Howl({
@@ -256,6 +537,12 @@ export default function Home() {
     };
     const SPEED = 300;
 
+    scene("gameover", () => {
+
+      setFailModal(true);
+
+    });
+
     scene("game", (dungeonId: number, playerHealth: number) => {
       layers(["bg", "game", "ui"], "obgamej");
 
@@ -270,17 +557,120 @@ export default function Home() {
           add([sprite("dungeon-3"), scale(0.79)]);
         }
 
-        const characters: any = {
-          g: {
+        const characters: any = [
+          {
             sprite: "goblin",
+            hitChance: 0.1,
           },
-          w: {
+          {
             sprite: "wolf",
+            hitChance: 0.1,
           },
-          s: {
+          {
             sprite: "skeleton",
+            hitChance: 0.1,
           },
-        };
+          {
+            sprite: "zombie",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "blueDevil",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "redDevil",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "greenDevil",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "blueBoar",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "redBoar",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "pumpkinKing",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "worm",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "eyeball",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "ghost",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "snake",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "bat",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "flower",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider1",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider2",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider3",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider4",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider5",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider6",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider7",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider8",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider9",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider10",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "spider11",
+            hitChance: 0.1,
+          },
+          {
+            sprite: "bigBoss",
+            hitChance: 0.1,
+          },
+        ];
 
         let dungeons = [
           [
@@ -290,13 +680,13 @@ export default function Home() {
             "==      =- ==     ==",
             "==  p   =- ==     ==",
             "==    = =- ==     ==",
-            "==  g   =- ==     ==",
-            "====   ==     w  ===",
+            "==  e   =- ==     ==",
+            "====   ==     e  ===",
             "====             ===",
             "====      =      ===",
             "====     ==      ===",
-            "==          g     ==",
-            "==    s           ==",
+            "==          e     ==",
+            "==    e           ==",
             "==           =    ==",
             "==        =  =    ==",
             "==                ==",
@@ -309,10 +699,10 @@ export default function Home() {
             "====================",
             "====================",
             "====================",
-            "=== ==   ===   s ===",
+            "=== ==   ===   e ===",
             "=== ==  ==== =  ====",
             "=== p    ===     ===",
-            "===    ==      w ===",
+            "===    ==      e ===",
             "===    ==      = ===",
             "===    ==        ===",
             "===              ===",
@@ -331,10 +721,10 @@ export default function Home() {
             "====================",
             "=========x =========",
             "=========  =       =",
-            "===     =- =   s   =",
+            "===     =- =   e   =",
             "=== p   =- =       =",
             "===     =- =       =",
-            "===     =- =   w   =",
+            "===     =- =   e   =",
             "=== =   =- =       =",
             "===   - =- =       =",
             "=======       ======",
@@ -389,12 +779,12 @@ export default function Home() {
               height: 40,
             }),
           ],
-          any(ch: string) {
-            const char = characters[ch];
-            if (char) {
-              return ["enemy", sprite(char.sprite), solid(), area()];
-            }
-          },
+          e: (e: string) => [
+            "enemy",
+            solid(),
+            sprite(characters[Math.floor(Math.random() * (characters.length-1))].sprite),
+            area(),
+          ],
           p: () => [
             "player",
             sprite("hero"),
@@ -433,7 +823,11 @@ export default function Home() {
         player.onHurt(() => {
           hearts.pop().destroy();
           if (player.hp() === 0) {
-            go("gameover");
+            // go("gameover");
+            loss.play();
+            setTimeout(()=> {
+              router.push({pathname: '/game', query: { h: heroId, d: difficultyId, w: 0}});
+            }, 800);
           }
         });
 
@@ -467,20 +861,30 @@ export default function Home() {
         }
 
         onCollide("player", "door", (p, d) => {
-          go("game", dungeonId + 1, player.hp());
-          player.pos = vec2(200, 100);
+          if ( dungeonId < 2 ) {
+            go("game", dungeonId + 1, player.hp());
+            player.pos = vec2(200, 100);
+            door.play();
+          } else {
+            setWinModal(true);
+          }
         });
 
         onCollide("player", "enemy", async (p, e) => {
           console.log("collided");
+
+          setFailModal(true);
+
 
           if(router.query.h) {
             if(router.query.h == "1") {
               fight_1.play();
             } else if (router.query.h == "2") {
               fight_2.play();
-            } else {
+            } else if (router.query.h == "3") {
               fight_3.play();
+            } else {
+              fight_1.play();
             }
           }
           
@@ -488,6 +892,13 @@ export default function Home() {
             onEnd: () => {
               player.hurt(1);
               e.destroy();
+
+              add([sprite("heartFull"), scale(0.8), solid(), pos(164, 164), area({
+                width: 40,
+                height: 40,
+              }),"life"])
+              //% chance to drop heart
+
             },
           });
           p.play("attack", {
@@ -499,6 +910,19 @@ export default function Home() {
           // const bal = await WGoldContract.balanceOf("0x69420f472c8adB8ef633c35062a54b38F32fB0D7");
           // console.log(bal.toString());
         });
+
+        onCollide("player", "life", (p, l) => {
+          l.destroy();
+          pickItem.play();
+
+          if (player.hp() < 3) {
+            player.heal(1);
+          }
+
+          hearts.push(add([sprite("heartFull"), pos(30 + (player.hp()-1) * 64, 30), "heartFull"]));
+
+        });
+
       }
 
       generateLevel(dungeonId);
@@ -560,23 +984,63 @@ export default function Home() {
           <Button style={{ float: "right", marginTop: "-60px" }}>MENU</Button>
         </Link>
 
-        {/* TEMP */}
-        <Box sx={{ float: "right", marginRight: "0" }}>
-          <RoundModal
-            buttonColor="success"
-            buttonText="Win"
-            modalTitle="Round 1 Completed!"
-            modalText="<b>.....</b>"
-            playClick={playClick}
-          />
-          <RoundModal
-            buttonColor="error"
-            buttonText="Loss"
-            modalTitle="Round 1 Failed!"
-            modalText="<b>.....</b>"
-            playClick={playClick}
-          />
-        </Box>
+
+
+        <Stack className="pixel-borders--2" sx={{ 
+            display: winModal || failModal ? "block" : "none",
+            position: "absolute",
+            left: "0",
+            right: "0",
+            top: "0",
+            bottom: "0",
+            margin: "auto",
+            width: "800px",
+            height: "400px",
+            padding: "40px 40px",
+            background: "linear-gradient(180deg, #75C4FF 0%, #75C4FF 50%, #B9E1FF 50.1%, #B9E1FF 100%)",
+          }}>
+
+        {(winModal) ? (
+           <Typography variant="h5" color="#000"> Dungeon Completed! </Typography>
+          ):(
+            <Typography variant="h5" color="#D20404"> Dungeon Completed! </Typography>
+          )}
+          
+        <br />
+        <small>
+        <Typography variant="body1">Dungeon Mode: Easy</Typography>
+        <br />
+
+        {(winModal) ? (
+            <Typography variant="body1">Rewards: <Box component="div" sx={{ display: 'inline', color: "#00FF19", textShadow: "2px 2px 0px rgba(0,0,0,0.5)"}}>+0.2 tFIL</Box><br /></Typography>
+          ):(
+            <Typography variant="body1">Loss: <Box component="div" sx={{ display: 'inline', color: "#D20404", textShadow: "2px 2px 0px rgba(0,0,0,0.3)"}}>-0.2 tFIL</Box><br /></Typography>
+          )}
+        </small>
+          
+          <br />
+          <br />
+
+          <Link href="/heroes" passHref>
+          <Button 
+            onClick={()=> { playClick() } } 
+            sx={{padding: "10px 20px 10px 20px !important"}}>Go To Menu</Button>
+          </Link>
+
+          {(winModal) ? (
+            <Button 
+              onClick={()=> { playClick() }  } 
+              color="secondary"
+              sx={{}}>Next Round</Button>
+          ):(
+            <Button 
+              onClick={()=> { playClick() } } 
+              color="secondary"
+              sx={{}}>Try Again</Button>
+          )}
+
+        </Stack>
+
       </Stack>
 
       <Box sx={{}}>

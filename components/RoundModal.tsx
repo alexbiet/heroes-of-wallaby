@@ -7,7 +7,9 @@ type modalProps = {
   modalTitle : string;
   modalText : string;
   buttonColor : string;
+  difficulty : string;
   playClick : Function;
+  showModal : boolean;
 }
 
 function RoundModal(props: modalProps) {
@@ -17,10 +19,12 @@ function RoundModal(props: modalProps) {
     modalTitle,
     modalText,
     buttonColor,
+    difficulty,
     playClick,
+    showModal,
   } = props;
 
-  const [modalStatus, setModalStatus] = useState(false);
+  const [modalStatus, setModalStatus] = useState(showModal);
 
   return (
     <>
@@ -44,15 +48,13 @@ function RoundModal(props: modalProps) {
       {/* <Typography variant="body1">{modalText}</Typography> */}
       <br />
       <small>
-      <Typography variant="body1">Round 1 / 10</Typography>
-      <br />
-      <Typography variant="body1">Dungeon Mode: Easy</Typography>
+      <Typography variant="body1">Dungeon Mode: {difficulty}</Typography>
       <br />
 
       {(buttonColor=="success") ? (
-          <Typography variant="body1">Rewards: <Box component="div" sx={{ display: 'inline', color: "#00FF19", textShadow: "2px 2px 0px rgba(0,0,0,0.5)"}}>+1.2 FIL</Box><br /></Typography>
+          <Typography variant="body1">Rewards: <Box component="div" sx={{ display: 'inline', color: "#00FF19", textShadow: "2px 2px 0px rgba(0,0,0,0.5)"}}>+0.2 tFIL</Box><br /></Typography>
         ):(
-          <Typography variant="body1">Loss: <Box component="div" sx={{ display: 'inline', color: "#D20404", textShadow: "2px 2px 0px rgba(0,0,0,0.3)"}}>-0.2 FIL</Box><br /></Typography>
+          <Typography variant="body1">Loss: <Box component="div" sx={{ display: 'inline', color: "#D20404", textShadow: "2px 2px 0px rgba(0,0,0,0.3)"}}>-0.2 tFIL</Box><br /></Typography>
         )}
       </small>
         
