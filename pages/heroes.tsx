@@ -164,7 +164,7 @@ export default function Heroes() {
             }}
           >
             <Link
-              hidden={!ownsHero}
+              hidden={ownsHero}
               href={{
                 pathname: "/difficulty",
                 query: {
@@ -179,7 +179,7 @@ export default function Heroes() {
               <Button sx={{ width: "100%" }}>Pick</Button>
             </Link>
             <Button
-              hidden={ownsHero}
+              hidden={!ownsHero}
               color="success"
               style={{ width: "100%" }}
               onClick={() => handleMint(1)}
@@ -194,7 +194,7 @@ export default function Heroes() {
               }}
             >
               <Button
-                hidden={!ownsHero}
+                hidden={ownsHero}
                 onClick={() => handleBurn(1)}
                 color="error"
                 sx={{ padding: "10px 20px 10px 20px !important" }}
