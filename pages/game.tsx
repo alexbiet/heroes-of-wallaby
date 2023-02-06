@@ -706,7 +706,7 @@ export default function Home() {
             "===    ==      = ===",
             "===    ==        ===",
             "===              ===",
-            "===      ==-     ===",
+            "===   e  ==-  e  ===",
             "===      ==-     ===",
             "=====-    =-     ===",
             "=====- =       = ===",
@@ -728,8 +728,8 @@ export default function Home() {
             "=== =   =- =       =",
             "===   - =- =       =",
             "=======       ======",
-            "======             =",
-            "=   ==             =",
+            "======  e          =",
+            "=   ==      e      =",
             "=   ==             =",
             "======             =",
             "=     =======      =",
@@ -748,10 +748,7 @@ export default function Home() {
           height: 40,
           "=": () => [
             "wall",
-            sprite("square", {
-              width: 40,
-              height: 40,
-            }),
+
             solid(),
             area({
               width: 40,
@@ -875,8 +872,8 @@ export default function Home() {
         onCollide("player", "enemy", async (p, e) => {
           console.log("collided");
 
-          if(router.query.h) {
-            if(router.query.h == "1") {
+          if (router.query.h) {
+            if (router.query.h == "1") {
               fight_1.play();
             } else if (router.query.h == "2") {
               fight_2.play();
@@ -920,8 +917,8 @@ export default function Home() {
           l.destroy();
           pickItem.play();
 
-          if (player.hp() < 3) {
-            player.heal(1);
+          if (p.hp() < 3) {
+            p.heal(1);
           }
 
           hearts.push(
@@ -934,7 +931,7 @@ export default function Home() {
     });
 
     go("game", 0, 3);
-  }, [provider, router, selectedHero]);
+  }, [door, failModal, loss, pickItem, provider, router, selectedHero, winModal]);
 
   ////////////////////////////////
   ///////// SOCKET LOGIC /////////
